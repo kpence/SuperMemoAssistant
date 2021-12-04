@@ -25,7 +25,7 @@
 
 
 
-namespace SuperMemoAssistant.Plugins.DevSandbox
+namespace SuperMemoAssistant.Plugins.ApiServer
 {
   using System;
   using System.IO;

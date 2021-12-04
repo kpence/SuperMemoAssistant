@@ -25,7 +25,7 @@
 
 
 
-namespace SuperMemoAssistant.Plugins.DevSandbox
+namespace SuperMemoAssistant.Plugins.ApiServer
 {
   using System;
   using System.Runtime.Remoting;
@@ -49,6 +49,7 @@ namespace SuperMemoAssistant.Plugins.DevSandbox
     protected override void Dispose(bool disposing)
     {
       Kernel32.FreeConsole();
+      HttpServer.Dispose();
 
       base.Dispose(disposing);
     }
@@ -77,13 +78,6 @@ namespace SuperMemoAssistant.Plugins.DevSandbox
     {
       Svc.HotKeyManager
          .RegisterGlobal(
-           "TestAnotherThing",
-           "TestAnotherThing",
-           HotKeyScopes.SM,
-           new HotKey(Key.D2, KeyModifiers.CtrlAltShift),
-           TestAnotherThing
-         )
-         .RegisterGlobal(
            "TestSomething",
            "TestSomething",
            HotKeyScopes.SM,
@@ -94,7 +88,9 @@ namespace SuperMemoAssistant.Plugins.DevSandbox
       Kernel32.CreateConsole();
 
       Svc.SM.UI.ElementWdw.OnElementChanged += new ActionProxy<SMDisplayedElementChangedEventArgs>(OnElementChanged);
+      UpdateElementInfo();
 
+      HttpServer.Create();
       base.OnSMStarted(wasSMAlreadyStarted);
     }
 
@@ -110,6 +106,11 @@ namespace SuperMemoAssistant.Plugins.DevSandbox
 
     public static void OnElementChanged(SMDisplayedElementChangedEventArgs e)
     {
+      UpdateElementInfo();
+    }
+
+    public static void UpdateElementInfo()
+    {
       try
       {
         ApiServerState.Instance.ElementInfo = Svc.SM.UI.ElementWdw.GetElementAsText();
@@ -121,34 +122,6 @@ namespace SuperMemoAssistant.Plugins.DevSandbox
     {
       MessageBox.Show(ApiServerState.Instance.ElementInfo);
     }
-
-    private static void TestAnotherThing()
-    {
-      foreach (var template in Svc.SM.Registry.Template)
-        Console.WriteLine($"{template.Id}: {template.Name} ({template.UseCount})");
-
-      int templateId;
-
-      do
-      {
-        Console.Write("Input template id: ");
-        string input = Console.ReadLine();
-
-        if (int.TryParse(input, out templateId) == false)
-          Console.WriteLine($"Invalid input: '{input}'.");
-
-        var template = Svc.SM.Registry.Template[templateId];
-
-        if (template == null || template.Empty)
-        {
-          Console.WriteLine("No such template.");
-          templateId = 0;
-        }
-      } while (templateId == 0);
-
-      Svc.SM.UI.ElementWdw.ApplyTemplate(templateId);
-    }
-
     #endregion
   }
 }

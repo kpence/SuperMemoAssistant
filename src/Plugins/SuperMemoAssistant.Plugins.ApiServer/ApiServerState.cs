@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperMemoAssistant.Plugins.DevSandbox
+namespace SuperMemoAssistant.Plugins.ApiServer
 {
   class ApiServerState
   {

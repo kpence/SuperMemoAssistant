@@ -16,6 +16,9 @@
     <!-- releaseNotes will be replaced by MSBuild.Tools (see SuperMemoAssistant.csproj and https://github.com/alexis-/MSBuild.Tools) -->
     <releaseNotes>- Added: Forced creation of nuget and release folders
 - Fixed: Absolute path in nuget.config
+- Correct path of ApiServer project
+- Set up Supermemo Api Server
+- Begin work on Supermemo Api Server
 </releaseNotes>
   </metadata>
   <files>
