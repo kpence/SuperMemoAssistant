@@ -34,7 +34,9 @@ namespace SuperMemoAssistant.Plugins.ApiServer
   using Services;
   using Services.IO.Keyboard;
   using SuperMemoAssistant.Interop.Plugins;
+  using SuperMemoAssistant.Interop.SuperMemo.Content.Controls;
   using SuperMemoAssistant.Interop.SuperMemo.Core;
+  using SuperMemoAssistant.Plugins.ApiServer.Models;
   using SuperMemoAssistant.Sys.Remoting;
   using Sys.IO.Devices;
 
@@ -87,10 +89,12 @@ namespace SuperMemoAssistant.Plugins.ApiServer
 
       Kernel32.CreateConsole();
 
-      Svc.SM.UI.ElementWdw.OnElementChanged += new ActionProxy<SMDisplayedElementChangedEventArgs>(OnElementChanged);
-      UpdateElementInfo();
-
       HttpServer.Create();
+      HttpServer.Instance.Route("/element-info", _ => ApiServerState.Instance.ElementInfo.ToJson());
+
+      Svc.SM.UI.ElementWdw.OnElementChanged += new ActionProxy<SMDisplayedElementChangedEventArgs>(OnElementChanged);
+      UpdateElementInfo(null);
+
       base.OnSMStarted(wasSMAlreadyStarted);
     }
 
@@ -106,21 +110,23 @@ namespace SuperMemoAssistant.Plugins.ApiServer
 
     public static void OnElementChanged(SMDisplayedElementChangedEventArgs e)
     {
-      UpdateElementInfo();
+      IControlHtml ctrlHtml = Svc.SM.UI.ElementWdw.ControlGroup.GetFirstHtmlControl();
+      //ApiServerState.Instance.OnElementChanged(e.NewElement, ctrlHtml);
+      UpdateElementInfo(ctrlHtml.Text);
     }
 
-    public static void UpdateElementInfo()
+    public static void UpdateElementInfo(string content)
     {
       try
       {
-        ApiServerState.Instance.ElementInfo = Svc.SM.UI.ElementWdw.GetElementAsText();
+        ApiServerState.Instance.ElementInfo = new ElementInfo(Svc.SM.UI.ElementWdw.GetElementAsText(), content);
       }
       catch (RemotingException) { }
     }
 
     private static void TestSomething()
     {
-      MessageBox.Show(ApiServerState.Instance.ElementInfo);
+      MessageBox.Show(ApiServerState.Instance.ElementInfo.ToJson());
     }
     #endregion
   }

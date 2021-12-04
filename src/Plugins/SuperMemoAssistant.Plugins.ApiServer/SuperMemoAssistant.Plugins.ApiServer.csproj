@@ -2,7 +2,7 @@
 <Project Sdk="SuperMemoAssistant.Sdk.WindowsDesktop">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>SuperMemoAssistant.Plugins.DevSandbox</RootNamespace>
+    <RootNamespace>SuperMemoAssistant.Plugins.ApiServer</RootNamespace>
     <Deterministic>true</Deterministic>
     <UseWPF>true</UseWPF>
     <AssemblyVersion>2.0.4.1</AssemblyVersion>

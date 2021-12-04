@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMemoAssistant.Plugins.ApiServer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ namespace SuperMemoAssistant.Plugins.ApiServer
   class ApiServerState
   {
     public static ApiServerState Instance { get; } = new ApiServerState();
-    public string ElementInfo { get; set; }
+    public ElementInfo ElementInfo { get; set; }
   }
 }
