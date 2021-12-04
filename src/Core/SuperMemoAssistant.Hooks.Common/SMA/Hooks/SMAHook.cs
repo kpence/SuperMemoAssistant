@@ -69,10 +69,10 @@ namespace SuperMemoAssistant.SMA.Hooks
 
     public abstract bool OnUserMessage(int wParam);
 
-    public abstract void GetExecutionParameters(out int       method,
+    public abstract void GetExecutionParameters(out int method,
                                                 out dynamic[] parameters);
 
-    public abstract void SetExecutionResult(int result);
+    public abstract void SetExecutionResult(int result, dynamic outParameter);
 
     public abstract Dictionary<string, int> GetPatternsHintAddresses();
 

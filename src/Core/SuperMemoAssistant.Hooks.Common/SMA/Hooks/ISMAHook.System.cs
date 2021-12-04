@@ -48,7 +48,7 @@ namespace SuperMemoAssistant.SMA.Hooks
     void GetExecutionParameters(out int       method,
                                 out dynamic[] parameters);
 
-    void SetExecutionResult(int result);
+    void SetExecutionResult(int result, dynamic outParameter);
 
     Dictionary<string, int> GetPatternsHintAddresses();
     void                    SetPatternsHintAddresses(Dictionary<string, int> hintAddrs);

@@ -74,8 +74,6 @@ namespace SuperMemoAssistant
 
       SMA.Core.Logger?.Shutdown();
 #pragma warning disable CS0436 // Type conflicts with imported type
-      ModuleInitializer.SentryInstance?.Dispose();
-#pragma warning restore CS0436 // Type conflicts with imported type
 
       base.OnExit(e);
     }

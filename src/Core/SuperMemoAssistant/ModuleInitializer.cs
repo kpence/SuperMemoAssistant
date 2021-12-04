@@ -49,21 +49,11 @@ namespace SuperMemoAssistant
   using Services.IO.Diagnostics;
   using Services.IO.HotKeys;
   using Services.IO.Keyboard;
-  using Services.Sentry;
   using SMA;
   using SuperMemo.Common.Content.Layout;
 
   public static class ModuleInitializer
   {
-    #region Constants & Statics
-
-    public static IDisposable SentryInstance { get; private set; }
-
-    #endregion
-
-
-
-
     #region Methods
 
     public static void Initialize()
@@ -73,7 +63,7 @@ namespace SuperMemoAssistant
         // Required for logging
         SMA.Core.SharedConfiguration = new ConfigurationService(SMAFileSystem.SharedConfigDir);
 
-        SMA.Core.Logger = LoggerFactory.Create(SMAConst.Name, SMA.Core.SharedConfiguration, SentryEx.LogToSentry);
+        SMA.Core.Logger = LoggerFactory.Create(SMAConst.Name, SMA.Core.SharedConfiguration);
 
 #pragma warning disable CS0436 // Type conflicts with imported type
         Logger.ReloadAnotarLogger(typeof(ModuleInitializer));
@@ -84,8 +74,6 @@ namespace SuperMemoAssistant
         SMA.Core.SMAVersion = appType.GetAssemblyVersion();
 
         LogTo.Information("SuperMemo Assistant version {SMAVersion} starting.", SMA.Core.SMAVersion);
-
-        SentryInstance = SentryEx.Initialize("https://d798f114635d4d858e7c71fd5f7f6d70@o218793.ingest.sentry.io/5506799", SMA.Core.SMAVersion);
 
         SMA.Core.Configuration   = new ConfigurationService(SMAFileSystem.ConfigDir.Combine("Core"));
         SMA.Core.KeyboardHotKey  = KeyboardHookService.Instance;

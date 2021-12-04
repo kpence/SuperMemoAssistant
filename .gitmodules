@@ -4,30 +4,6 @@
 [submodule "libs/pngcs"]
 	path = libs/pngcs
 	url = https://github.com/supermemo/pngcs.git
-[submodule "src/Plugins/SuperMemoAssistant.Plugins.LateX"]
-	path = src/Plugins/SuperMemoAssistant.Plugins.LateX
-	url = https://github.com/supermemo/SuperMemoAssistant.Plugins.LateX.git
-[submodule "src/Plugins/SuperMemoAssistant.Plugins.PDF"]
-	path = src/Plugins/SuperMemoAssistant.Plugins.PDF
-	url = https://github.com/supermemo/SuperMemoAssistant.Plugins.PDF.git
-[submodule "src/Plugins/SuperMemoAssistant.Plugins.ImageOcclusion"]
-	path = src/Plugins/SuperMemoAssistant.Plugins.ImageOcclusion
-	url = https://github.com/supermemo/SuperMemoAssistant.Plugins.ImageOcclusion.git
-[submodule "src/Plugins/SuperMemoAssistant.Plugins.MediaPlayer"]
-	path = src/Plugins/SuperMemoAssistant.Plugins.MediaPlayer
-	url = https://github.com/supermemo/SuperMemoAssistant.Plugins.MediaPlayer.git
-[submodule "src/Plugins/SuperMemoAssistant.Plugins.Dictionary"]
-	path = src/Plugins/SuperMemoAssistant.Plugins.Dictionary
-	url = https://github.com/supermemo/SuperMemoAssistant.Plugins.Dictionary.git
-[submodule "src/Plugins/SuperMemoAssistant.Plugins.Dictionary.Interop"]
-	path = src/Plugins/SuperMemoAssistant.Plugins.Dictionary.Interop
-	url = https://github.com/supermemo/SuperMemoAssistant.Plugins.Dictionary.Interop.git
-[submodule "src/Plugins/SuperMemoAssistant.Plugins.Import"]
-	path = src/Plugins/SuperMemoAssistant.Plugins.Import
-	url = https://github.com/supermemo/SuperMemoAssistant.Plugins.Import.git
-[submodule "src/Plugins/SuperMemoAssistant.Plugins.Import.BrowserExtension"]
-	path = src/Plugins/SuperMemoAssistant.Plugins.Import.BrowserExtension
-	url = https://github.com/supermemo/SuperMemoAssistant.Plugins.Import.BrowserPlugin.git
 [submodule "libs/Squirrel.Windows"]
 	path = libs/Squirrel.Windows
 	url = https://github.com/supermemo/Squirrel.Windows.git
@@ -41,21 +17,12 @@
 [submodule "libs/Extensions.System.IO"]
 	path = libs/Extensions.System.IO
 	url = https://github.com/alexis-/Extensions.System.IO.git
-[submodule "src/Services/SuperMemoAssistant.Services.Sentry"]
-	path = src/Services/SuperMemoAssistant.Services.Sentry
-	url = https://github.com/supermemo/SuperMemoAssistant.Services.Sentry.git
-[submodule "src/Services/SuperMemoAssistant.Services.Medias.Images"]
-	path = src/Services/SuperMemoAssistant.Services.Medias.Images
-	url = https://github.com/supermemo/SuperMemoAssistant.Services.Medias.Images.git
 [submodule "src/Services/SuperMemoAssistant.Services.UI"]
 	path = src/Services/SuperMemoAssistant.Services.UI
-	url = https://github.com/supermemo/SuperMemoAssistant.Services.UI.git
-[submodule "src/Services/SuperMemoAssistant.Services.HTML"]
-	path = src/Services/SuperMemoAssistant.Services.HTML
-	url = https://github.com/supermemo/SuperMemoAssistant.Services.HTML.git
+	url = https://github.com/kpence/SuperMemoAssistant.Services.UI.git
 [submodule "src/Core/SuperMemoAssistant.Interop"]
 	path = src/Interop
-	url = https://github.com/supermemo/SuperMemoAssistant.Interop.git
+	url = https://github.com/kpence/SuperMemoAssistant.Interop.git
 [submodule "src/Build/MSBuild"]
 	path = src/Build/MSBuild
 	url = https://github.com/supermemo/SuperMemoAssistant.Sdk.git
@@ -65,12 +32,3 @@
 [submodule "libs/VisualStudio.GitHooks"]
 	path = libs/VisualStudio.GitHooks
 	url = https://github.com/alexis-/VisualStudio.GitHooks.git
-[submodule "src/Plugins/SuperMemoAssistant.Plugins.OmniMemo"]
-	path = src/Plugins/SuperMemoAssistant.Plugins.OmniMemo
-	url = https://github.com/supermemo/SuperMemoAssistant.Plugins.OmniMemo.git
-[submodule "src/Plugins/SuperMemoAssistant.Plugins.Email"]
-	path = src/Plugins/SuperMemoAssistant.Plugins.Email
-	url = https://github.com/supermemo/SuperMemoAssistant.Plugins.Email.git
-[submodule "src/Services/SuperMemoAssistant.Services.ToastNotifications"]
-	path = src/Services/SuperMemoAssistant.Services.ToastNotifications
-	url = https://github.com/supermemo/SuperMemoAssistant.Services.ToastNotifications.git

@@ -363,6 +363,60 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       }
     }
 
+    public bool SetGrade(int grade)
+    {
+      try
+      {
+        return Core.Natives.ElWind.SetGrade(ElementWdwPtr.Read<IntPtr>(), grade);
+      }
+      catch (Win32Exception ex)
+      {
+        LogTo.Warning(ex, "Failed to read ElementWdwPtr");
+        return false;
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "SM internal method call threw an exception.");
+        return false;
+      }
+    }
+
+    public string GetElementAsText()
+    {
+      try
+      {
+        return Core.Natives.ElWind.GetElementAsText(ElementWdwPtr.Read<IntPtr>());
+      }
+      catch (Win32Exception ex)
+      {
+        LogTo.Warning(ex, "Failed to read ElementWdwPtr");
+        return null;
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "SM internal method call threw an exception.");
+        return null;
+      }
+    }
+
+    public float GetElementPriority(int elementNumber)
+    {
+      try
+      {
+        return Core.Natives.ElWind.GetElementPriority(elementNumber);
+      }
+      catch (Win32Exception ex)
+      {
+        LogTo.Warning(ex, "Failed to read ElementWdwPtr");
+        return 0;
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "SM internal method call threw an exception.");
+        return 0;
+      }
+    }
+
     public bool PostponeRepetition(int interval)
     {
       try

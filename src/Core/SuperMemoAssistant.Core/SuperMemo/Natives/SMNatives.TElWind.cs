@@ -32,8 +32,10 @@ namespace SuperMemoAssistant.SuperMemo.Natives
 {
   using System;
   using System.Diagnostics.CodeAnalysis;
+  using System.Runtime.InteropServices;
   using System.Threading;
   using System.Threading.Tasks;
+  using System.Windows;
   using Anotar.Serilog;
   using Extensions;
   using Interop.SuperMemo.Content.Controls;
@@ -347,6 +349,57 @@ namespace SuperMemoAssistant.SuperMemo.Natives
         {
           LogTo.Error(ex, "Native method call threw an exception.");
           return false;
+        }
+      }
+
+      public bool SetGrade(IntPtr elementWdwPtr, int grade)
+      {
+        try
+        {
+          NativeMethod.ElWdw_SetGrade.ExecuteOnMainThread(
+            elementWdwPtr,
+            (int)grade);
+
+          return true;
+        }
+        catch (Exception ex)
+        {
+          LogTo.Error(ex, "Native method call threw an exception.");
+          return false;
+        }
+      }
+
+      public string GetElementAsText(IntPtr elementWdwPtr)
+      {
+        try
+        {
+          dynamic ret = "";
+          if (NativeMethod.ElWdw_GetElementAsText.ExecuteOnMainThreadWithOutParameter(out ret, elementWdwPtr) == 0)
+          {
+            return null;
+          }
+          return (string)ret;
+        }
+        catch (Exception ex)
+        {
+          LogTo.Error(ex, "Native method call threw an exception.");
+          return null;
+        }
+      }
+
+      public float GetElementPriority(int elementNumber)
+      {
+        // TODO this doesn't work because there's no way to get the float value
+        try
+        {
+          var priority = NativeMethod.TPriority_GetElementPriority.ExecuteOnMainThread(elementNumber);
+
+          return priority;
+        }
+        catch (Exception ex)
+        {
+          LogTo.Error(ex, "Native method call threw an exception.");
+          return 0;
         }
       }
 

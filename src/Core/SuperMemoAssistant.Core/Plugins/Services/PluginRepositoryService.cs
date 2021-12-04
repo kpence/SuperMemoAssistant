@@ -47,7 +47,6 @@ namespace SuperMemoAssistant.Plugins.Services
   using PluginManager.PackageManager.Models;
   using PluginManager.Services;
   using SMA;
-  using SuperMemoAssistant.Services.Sentry;
 
   /// <inheritdoc />
   public class PluginRepositoryService : DefaultPluginRepositoryService<PluginMetadata>
@@ -143,7 +142,7 @@ namespace SuperMemoAssistant.Plugins.Services
     {
       base.SetHttpClientHeaders(client);
 
-      client.DefaultRequestHeaders.Add("AnonymizedDeviceId", SentryEx.DeviceId);
+      client.DefaultRequestHeaders.Add("AnonymizedDeviceId", "0");
     }
 
     #endregion

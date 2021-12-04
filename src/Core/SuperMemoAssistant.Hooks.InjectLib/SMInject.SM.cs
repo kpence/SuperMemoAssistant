@@ -43,12 +43,14 @@ namespace SuperMemoAssistant.Hooks.InjectLib
   using System.Diagnostics;
   using System.Runtime.InteropServices;
   using System.Runtime.Remoting;
+  using System.Windows.Forms;
   using Extensions;
   using Process.NET;
   using Process.NET.Marshaling;
   using Process.NET.Memory;
   using Process.NET.Native.Types;
   using Process.NET.Patterns;
+  using Process.NET.Types;
   using SMA.Hooks;
   using SuperMemo;
   using SuperMemoAssistantHooksNativeLib;
@@ -138,6 +140,7 @@ namespace SuperMemoAssistant.Hooks.InjectLib
           return;
 
         int wParam = msgPtr->wParam;
+        dynamic outParameter = null;
 
         switch ((InjectLibMessageParam)wParam)
         {
@@ -150,7 +153,7 @@ namespace SuperMemoAssistant.Hooks.InjectLib
                 out var method,
                 out var parameters);
 
-              res = CallNativeMethod((NativeMethod)method, parameters);
+              res = CallNativeMethod((NativeMethod)method, parameters, out outParameter);
             }
             catch (Exception ex)
             {
@@ -158,7 +161,7 @@ namespace SuperMemoAssistant.Hooks.InjectLib
             }
             finally
             {
-              SMA.SetExecutionResult(res);
+              SMA.SetExecutionResult(res, outParameter);
             }
 
             *handled = true;
@@ -186,10 +189,12 @@ namespace SuperMemoAssistant.Hooks.InjectLib
     /// <returns>The returned value (eax register) from the call to <paramref name="method" /></returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1806:Do not ignore method results", Justification = "<Pending>")]
     private int CallNativeMethod(NativeMethod method,
-                                 dynamic[]    parameters)
+                                 dynamic[]    parameters,
+                                 out dynamic  outParameter)
     {
       SMA.Debug($"Executing native method {Enum.GetName(typeof(NativeMethod), method)}.");
 
+      outParameter = null;
       if (parameters == null)
       {
         OnException(new ArgumentNullException(nameof(parameters), $"CallNativeMethod: Called with null 'parameters' for method {method}"));
@@ -288,6 +293,19 @@ namespace SuperMemoAssistant.Hooks.InjectLib
                                  elWdw);
 
             return 1;
+          case NativeMethod.ElWdw_GetElementAsText:
+            elWdw   = marshalledParameters[0].Reference.ToInt32();
+            var marshalled = MarshalValue.Marshal(_smProcess, new DelphiUTF8String(8000)); // I'm using this because I think it allocates memory
+            var strAddress = marshalled.Reference.ToInt32();
+            var ret = Delphi.registerCall2(_callTable[NativeMethod.ElWdw_GetElementAsText],
+                                 elWdw,
+                                 strAddress);
+
+            unsafe
+            {
+              outParameter = Marshal.PtrToStringAnsi(new IntPtr(*(int*)(marshalled.Reference.ToPointer())));
+            }
+            return ret;
         }
 
         switch (parameters.Length)
@@ -338,7 +356,9 @@ namespace SuperMemoAssistant.Hooks.InjectLib
       finally
       {
         foreach (var param in marshalledParameters)
+        {
           param.Dispose();
+        }
       }
     }
 

@@ -771,6 +771,10 @@
         "Pattern": "E8 ? ? ? ? EB 7C B2 02",
         "Offset": 1
       },
+      "ElWdw_SetGrade": { // TElWind::SetGrade
+        "Pattern": "E8 ? ? ? ? EB 46 BA ? ? ? ? 8B 45 FC",
+        "Offset":  1
+      },
       "ElWdw_ScheduleInInterval": { // TElWind::ScheduleInInterval
         "Pattern": "E8 ? ? ? ? 80 BD ? ? ? ? ? 75 45 8D 45 8E",
         "Offset": 1
@@ -838,6 +842,14 @@
       "Queue_GetItem": { // TQueue::GetItem
         "Pattern": "E8 ? ? ? ? 89 45 AB",
         "Offset": 1
+      },
+      "TPriority_GetElementPriority": { // TPriority::GetElementPriority
+        "Pattern": "E8 ? ? ? ? DD 5D E8 9B EB 0C",
+        "Offset": 1
+      },
+      "ElWdw_GetElementAsText": { // TElWind::GetElementAsText
+        "Pattern": "E8 ? ? ? ? 8B 55 E0 8D 45 F8 E8 ? ? ? ? 8D 55 F4",
+        "Offset":  1
       }
     },
     "NativeDataPatterns": {},

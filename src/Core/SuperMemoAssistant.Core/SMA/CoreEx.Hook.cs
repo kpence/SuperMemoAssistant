@@ -31,6 +31,7 @@
 
 
 using SuperMemoAssistant.SuperMemo;
+using System;
 
 namespace SuperMemoAssistant.SMA
 {
@@ -42,7 +43,16 @@ namespace SuperMemoAssistant.SMA
       this   NativeMethod method,
       params dynamic[]    parameters)
     {
-      return Core.Hook.ExecuteOnMainThread(method, parameters);
+      dynamic _unused = null;
+      return Core.Hook.ExecuteOnMainThread(method, parameters, out _unused);
+    }
+
+    public static int ExecuteOnMainThreadWithOutParameter(
+      this   NativeMethod method,
+      out    dynamic      outParameter,
+      params dynamic[]    parameters)
+    {
+      return Core.Hook.ExecuteOnMainThread(method, parameters, out outParameter);
     }
 
     #endregion
