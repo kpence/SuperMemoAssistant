@@ -55,6 +55,7 @@ namespace SuperMemoAssistant.SuperMemo
     ElWdw_SetElementState,
     ElWdw_SetGrade,
     ElWdw_GetElementAsText,
+    ElWdw_BeginLearning,
     TPriority_GetElementPriority,
     ElWdw_ScheduleInInterval,
     ElWdw_ExecuteUncommittedRepetition,

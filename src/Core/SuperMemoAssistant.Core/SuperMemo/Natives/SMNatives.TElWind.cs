@@ -387,9 +387,23 @@ namespace SuperMemoAssistant.SuperMemo.Natives
         }
       }
 
+      public bool BeginLearning(IntPtr elementWdwPtr, int learningMode)
+      {
+        try
+        {
+          NativeMethod.ElWdw_BeginLearning.ExecuteOnMainThread(elementWdwPtr, learningMode);
+          return true;
+        }
+        catch (Exception ex)
+        {
+          LogTo.Error(ex, "Native method call threw an exception.");
+          return false;
+        }
+      }
+
       public float GetElementPriority(int elementNumber)
       {
-        // TODO this doesn't work because there's no way to get the float value
+        // TODO this doesn't work because there's no way to get the ST0 float value
         try
         {
           var priority = NativeMethod.TPriority_GetElementPriority.ExecuteOnMainThread(elementNumber);

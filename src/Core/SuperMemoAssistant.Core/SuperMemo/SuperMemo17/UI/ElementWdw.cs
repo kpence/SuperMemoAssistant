@@ -399,6 +399,24 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       }
     }
 
+    public bool BeginLearning(LearningMode learningMode)
+    {
+      try
+      {
+        return Core.Natives.ElWind.BeginLearning(ElementWdwPtr.Read<IntPtr>(), (int)learningMode);
+      }
+      catch (Win32Exception ex)
+      {
+        LogTo.Warning(ex, "Failed to read ElementWdwPtr");
+        return false;
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "SM internal method call threw an exception.");
+        return false;
+      }
+    }
+
     public float GetElementPriority(int elementNumber)
     {
       try

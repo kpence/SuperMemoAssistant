@@ -850,6 +850,10 @@
       "ElWdw_GetElementAsText": { // TElWind::GetElementAsText
         "Pattern": "E8 ? ? ? ? 8B 55 E0 8D 45 F8 E8 ? ? ? ? 8D 55 F4",
         "Offset":  1
+      },
+      "ElWdw_BeginLearning": { // TElWind::BeginLearning
+        "Pattern": "E8 ? ? ? ? EB 24 8B 55 FC",
+        "Offset":  1
       }
     },
     "NativeDataPatterns": {},

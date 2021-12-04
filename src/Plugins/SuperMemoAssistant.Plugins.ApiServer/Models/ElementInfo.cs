@@ -52,13 +52,16 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Models
     public string Reference;
     [JsonProperty(PropertyName = "SourceArticle")]
     public string SourceArticleId;
+    [JsonProperty(PropertyName = "_FullInfo")]
+    public string _FullInfo;
 
     public ElementInfo(string elementInfo, string content)
     {
+      _FullInfo = elementInfo;
       Content = content;
       Source = TryParse(elementInfo, @"^Source=(.*)\r$");
       ParentElementId = TryParse(elementInfo, @"^Parent=(.*)\r$");
-      ElementId = TryParse(elementInfo, @"^Element#(.*)\r$");
+      ElementId = TryParse(elementInfo, @"^Begin Element #(.*)\r$");
       ParentTitle = TryParse(elementInfo, @"^ParentTitle=(.*)\r$");
       Priority = TryParse(elementInfo, @"^Priority=(.*)\r$");
       Title = TryParse(elementInfo, @"^Source=(.*)\r$");
@@ -68,6 +71,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Models
       Ordinal = TryParse(elementInfo, @"^Ordinal=(.*)\r$");
       Repetitions = TryParse(elementInfo, @"^Repetitions=(.*)\r$");
       Lapses = TryParse(elementInfo, @"^Lapses=(.*)\r$");
+      Interval = TryParse(elementInfo, @"^Interval=(.*)\r$");
       LastRepetition = TryParse(elementInfo, @"^LastRepetition=(.*)\r$"); // TODO Parse this for datetime
       AFactor = TryParse(elementInfo, @"^AFactor=(.*)\r$");
       UFactor = TryParse(elementInfo, @"^UFactor=(.*)\r$");

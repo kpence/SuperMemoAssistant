@@ -39,38 +39,45 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     {
       bool runServer = true;
 
-      while (runServer)
+      try
       {
-        HttpListenerContext ctx = await listener.GetContextAsync();
-        HttpListenerRequest req = ctx.Request;
-        HttpListenerResponse resp = ctx.Response;
-
-        string postBody = null;
-
-        if (req.HttpMethod == "POST")
+        while (runServer)
         {
-          using var reader = new StreamReader(req.InputStream,
-                                               req.ContentEncoding);
-          postBody = reader.ReadToEnd();
-        }
+          HttpListenerContext ctx = await listener.GetContextAsync();
+          HttpListenerRequest req = ctx.Request;
+          HttpListenerResponse resp = ctx.Response;
 
-        byte[] data = Encoding.UTF8.GetBytes(defaultPageData);
+          string postBody = null;
 
-        foreach (var endPoint in endPoints)
-        {
-          if (endPoint.IsMatch(req.Url.AbsolutePath))
+          if (req.HttpMethod == "POST")
           {
-            // todo, maybe i can get capture groups for query string or sth
-            data = Encoding.UTF8.GetBytes(endPoint.Run(postBody));
-            break;
+            using var reader = new StreamReader(req.InputStream,
+                                                 req.ContentEncoding);
+            postBody = reader.ReadToEnd();
           }
-        }
 
-        resp.ContentType = "application/json";
-        resp.ContentEncoding = Encoding.UTF8;
-        resp.ContentLength64 = data.LongLength;
-        await resp.OutputStream.WriteAsync(data, 0, data.Length);
-        resp.Close();
+          byte[] data = Encoding.UTF8.GetBytes(defaultPageData);
+
+          foreach (var endPoint in endPoints)
+          {
+            if (endPoint.IsMatch(req.Url.AbsolutePath))
+            {
+              // todo, maybe i can get capture groups for query string or sth
+              data = Encoding.UTF8.GetBytes(endPoint.Run(postBody));
+              break;
+            }
+          }
+
+          resp.ContentType = "application/json";
+          resp.ContentEncoding = Encoding.UTF8;
+          resp.ContentLength64 = data.LongLength;
+          await resp.OutputStream.WriteAsync(data, 0, data.Length);
+          resp.Close();
+        }
+      }
+      catch (Exception e)
+      {
+        MessageBox.Show("Server died: " + e.Message);
       }
     }
 

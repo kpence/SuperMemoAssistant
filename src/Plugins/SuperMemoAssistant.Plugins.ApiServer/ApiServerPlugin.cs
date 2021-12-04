@@ -90,10 +90,17 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       Kernel32.CreateConsole();
 
       HttpServer.Create();
-      HttpServer.Instance.Route("/element-info", _ => ApiServerState.Instance.ElementInfo.ToJson());
+      HttpServer.Instance.Route("/element-info", _ => ApiServerController.ElementInfoAction());
+      HttpServer.Instance.Route("/learning-mode", _ => ApiServerController.LearningModeAction());
+      HttpServer.Instance.Route("/set-grade", grade => ApiServerController.SetGradeAction(grade));
+      HttpServer.Instance.Route("/was-graded", _ => ApiServerController.WasGradedAction());
+      HttpServer.Instance.Route("/next-element", _ => ApiServerController.NextElementAction());
+      HttpServer.Instance.Route("/done", _ => ApiServerController.DoneAction());
+      HttpServer.Instance.Route("/begin-learning", _ => ApiServerController.BeginLearningAction());
+      HttpServer.Instance.Route("/set-element-content", text => ApiServerController.SetElementContentAction(text));
 
       Svc.SM.UI.ElementWdw.OnElementChanged += new ActionProxy<SMDisplayedElementChangedEventArgs>(OnElementChanged);
-      UpdateElementInfo(null);
+      ApiServerState.Instance.UpdateElementInfo(null);
 
       base.OnSMStarted(wasSMAlreadyStarted);
     }
@@ -107,19 +114,13 @@ namespace SuperMemoAssistant.Plugins.ApiServer
 
 
     #region Methods
-
     public static void OnElementChanged(SMDisplayedElementChangedEventArgs e)
-    {
-      IControlHtml ctrlHtml = Svc.SM.UI.ElementWdw.ControlGroup.GetFirstHtmlControl();
-      //ApiServerState.Instance.OnElementChanged(e.NewElement, ctrlHtml);
-      UpdateElementInfo(ctrlHtml.Text);
-    }
-
-    public static void UpdateElementInfo(string content)
     {
       try
       {
-        ApiServerState.Instance.ElementInfo = new ElementInfo(Svc.SM.UI.ElementWdw.GetElementAsText(), content);
+        IControlHtml ctrlHtml = Svc.SM.UI.ElementWdw.ControlGroup.GetFirstHtmlControl();
+
+        ApiServerState.Instance.OnElementChanged(e.NewElement, ctrlHtml);
       }
       catch (RemotingException) { }
     }
