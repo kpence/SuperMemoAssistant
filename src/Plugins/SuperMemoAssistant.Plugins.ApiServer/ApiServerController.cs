@@ -190,6 +190,24 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       return JsonHelper.JsonFromValue(success);
     }
 
+    public static string ForceRepetitionAction(string textJson)
+    {
+      var success = false;
+      if (ApiServerState.Instance.IsReadyToGrade)
+      {
+        var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(textJson);
+        var days = jsonDict["days"];
+
+        success = Svc.SM.UI.ElementWdw.ForceRepetitionAndResume(days, true);
+        if (success)
+        {
+          ApiServerState.Instance.WasGraded = true;
+          ApiServerState.Instance.IsReadyToGrade = false;
+        }
+      }
+      return JsonHelper.JsonFromValue(success);
+    }
+
     public static string SetPriorityAction(string textJson)
     {
       var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, double>>(textJson);
