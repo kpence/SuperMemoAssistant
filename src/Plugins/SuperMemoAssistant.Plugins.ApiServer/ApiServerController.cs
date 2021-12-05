@@ -2,11 +2,14 @@
 using SuperMemoAssistant.Interop.SuperMemo.Learning;
 using SuperMemoAssistant.Plugins.ApiServer.Helpers;
 using SuperMemoAssistant.Services;
+using SuperMemoAssistant.Sys.IO.Devices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
 
 namespace SuperMemoAssistant.Plugins.ApiServer
 {
@@ -150,7 +153,12 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     {
       var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, double>>(textJson);
       var priority = jsonDict["priority"];
-      var success = Svc.SM.UI.ElementWdw.SetPriority(Svc.SM.UI.ElementWdw.CurrentElementId, priority);
+      var success = false;
+      if (!ApiServerState.Instance.WasGraded)
+      {
+        success = Svc.SM.UI.ElementWdw.SetPriority(Svc.SM.UI.ElementWdw.CurrentElementId, priority);
+        
+      }
 
       return JsonHelper.JsonFromValue(success);
     }

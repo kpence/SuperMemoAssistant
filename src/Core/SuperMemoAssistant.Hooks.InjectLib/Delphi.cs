@@ -94,6 +94,13 @@ namespace SuperMemoAssistant.Hooks.InjectLib
       int arg5,
       int arg6);
 
+    [DllImport("SuperMemoAssistant.Hooks.NativeLib.dll",
+               CallingConvention = CallingConvention.StdCall)]
+    internal static extern int registerCallDouble1(
+      int functionPtr,
+      int arg1,
+      double arg2);
+
     #endregion
 
 

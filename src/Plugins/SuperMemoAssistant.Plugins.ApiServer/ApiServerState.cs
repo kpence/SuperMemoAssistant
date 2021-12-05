@@ -20,6 +20,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     public static ApiServerState Instance { get; } = new ApiServerState();
     public ElementInfo ElementInfo { get; set; }
     public bool WasGraded { get; set; } = false;
+    //public IntPtr SuperMemoHWnd { get; set; }
 
     public void OnElementChanged(IElement newElement, IControlHtml ctrlHtml)
     {

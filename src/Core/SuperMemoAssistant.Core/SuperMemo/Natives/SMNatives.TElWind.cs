@@ -358,7 +358,7 @@ namespace SuperMemoAssistant.SuperMemo.Natives
         {
           NativeMethod.Priority_SetPriority.ExecuteOnMainThread(
             elementId,
-            priority);
+            (Int64)priority);
 
           return true;
         }

@@ -28,6 +28,7 @@
 namespace SuperMemoAssistant.Plugins.ApiServer
 {
   using System;
+  using System.Diagnostics;
   using System.Runtime.Remoting;
   using System.Windows;
   using System.Windows.Input;
@@ -109,6 +110,8 @@ namespace SuperMemoAssistant.Plugins.ApiServer
 
       Svc.SM.UI.ElementWdw.OnElementChanged += new ActionProxy<SMDisplayedElementChangedEventArgs>(OnElementChanged);
       ApiServerState.Instance.UpdateElementInfo(null);
+
+      //ApiServerState.Instance.SuperMemoHWnd = Process.GetProcessById(Svc.SM.ProcessId).MainWindowHandle;
 
       base.OnSMStarted(wasSMAlreadyStarted);
     }
