@@ -57,6 +57,7 @@ namespace SuperMemoAssistant.SuperMemo
     ElWdw_GetElementAsText,
     ElWdw_BeginLearning,
     Database_SetTitle,
+    Database_AppendComment,
     Priority_SetPriority,
     TPriority_GetElementPriority,
     ElWdw_ScheduleInInterval,

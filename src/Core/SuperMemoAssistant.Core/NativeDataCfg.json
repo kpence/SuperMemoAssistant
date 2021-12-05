@@ -697,6 +697,7 @@
       "SMMain_InstancePtr": "0x00CA61C0", // gvar_00CA31B8:TSMMain (above TContents)
       "Registry_FileSpaceInstance": "0x0C", // TDatabase::FileSpace:TFileSpace
       "Registry_TextRegistryInstance": "0x4E2", // TDatabase::TextRegistry:TTextRegistry
+      "Registry_CommentRegistryInstance": "0x4E6", // TDatabase::TCommentRegistry:TextRegistry
       "Registry_ImageRegistryInstance": "0x4FA", // TDatabase::ImageRegistry:TImageRegistry
       "Registry_SoundRegistryInstance": "0x4FE", // TDatabase::SoundRegistry:TSoundRegistry
       "Registry_VideoRegistryInstance": "0x502", // TDatabase::VideoRegistry:TVideoRegistry
@@ -868,6 +869,10 @@
       "Priority_SetPriority": { // TPriority::SetPriority
         "Pattern": "E8 ? ? ? ? 8B 45 92",
         "Offset": 1
+      },
+      "Database_AppendComment": { // TDatabase::AppendComment
+        "Pattern": "E8 ? ? ? ? 8D 55 F0 A1 ? ? ? ? 8B 00 B1 01",
+        "Offset":  1
       }
     },
     "NativeDataPatterns": {},

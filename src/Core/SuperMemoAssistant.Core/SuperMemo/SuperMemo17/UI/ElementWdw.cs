@@ -397,6 +397,24 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       }
     }
 
+    public bool AppendComment(int elementId, string comment)
+    {
+      try
+      {
+        return Core.Natives.ElWind.AppendComment(DatabasePtr.Read<IntPtr>(), elementId, comment);
+      }
+      catch (Win32Exception ex)
+      {
+        LogTo.Warning(ex, "Failed to read DatabasePtr?");
+        return false;
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "SM internal method call threw an exception.");
+        return false;
+      }
+    }
+
     public bool SetTitle(int elementId, string title)
     {
       try
@@ -405,7 +423,7 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       }
       catch (Win32Exception ex)
       {
-        LogTo.Warning(ex, "Failed to read DatabasePtr");
+        LogTo.Warning(ex, "Failed to read DatabasePtr?");
         return false;
       }
       catch (Exception ex)

@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using SuperMemoAssistant.Interop.SuperMemo.Elements.Builders;
+using SuperMemoAssistant.Interop.SuperMemo.Elements.Models;
 using SuperMemoAssistant.Interop.SuperMemo.Learning;
 using SuperMemoAssistant.Plugins.ApiServer.Helpers;
 using SuperMemoAssistant.Services;
@@ -33,9 +35,10 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     public static string NextElementAction()
     {
       var success = false;
-      if (Svc.SM.UI.ElementWdw.CurrentLearningMode == LearningMode.Standard && ApiServerState.Instance.WasGraded)
+      if (Svc.SM.UI.ElementWdw.CurrentLearningMode == LearningMode.Standard)
       {
         success = Svc.SM.UI.ElementWdw.NextElementInLearningQueue();
+        ApiServerState.Instance.IsReadyToGrade = true;
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -46,14 +49,14 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       var grade = jsonDict["grade"];
 
       var success = false;
-      var currentLearningMode = Svc.SM.UI.ElementWdw.CurrentLearningMode;
-      if (currentLearningMode == LearningMode.Standard)
+      if (ApiServerState.Instance.IsReadyToGrade)
       {
-        success = Svc.SM.UI.ElementWdw.SetGrade(grade);
-      }
-      if (success)
-      {
-        ApiServerState.Instance.WasGraded = true;
+        var currentLearningMode = Svc.SM.UI.ElementWdw.CurrentLearningMode;
+        if (currentLearningMode == LearningMode.Standard)
+        {
+          success = Svc.SM.UI.ElementWdw.SetGrade(grade);
+          ApiServerState.Instance.WasGraded = true;
+        }
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -71,6 +74,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       if (currentLearningMode == LearningMode.None)
       {
         success = Svc.SM.UI.ElementWdw.BeginLearning(currentLearningMode);
+        ApiServerState.Instance.IsReadyToGrade = true;
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -92,27 +96,51 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     public static string GoToFirstElementWithTitleAction(string textJson)
     {
       var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(textJson);
-      var text = jsonDict["text"];
+      var text = jsonDict["title"];
       var success = false;
 
-      if (!ApiServerState.Instance.WasGraded)
+      int sizeOfCollection = Svc.SM.Registry.Element.Count;
+      var elemId = -1;
+      for (var i = 1; i < sizeOfCollection+1; i += 1)
       {
-        int sizeOfCollection = Svc.SM.Registry.Element.Count;
-        var elemId = -1;
-        for (var i = 1; i < sizeOfCollection+1; i += 1)
+        var elem = Svc.SM.Registry.Element[i];
+        if (elem.Title == text)
         {
-          var elem = Svc.SM.Registry.Element[i];
-          if (elem.Title == text)
-          {
-            elemId = elem.Id;
-            break;
-          }
+          elemId = elem.Id;
+          break;
         }
-        if (elemId != -1)
+      }
+      if (elemId != -1)
+      {
+        Svc.SM.UI.ElementWdw.GoToElement(elemId);
+        success = true;
+        ApiServerState.Instance.IsReadyToGrade = false;
+      }
+      return JsonHelper.JsonFromValue(success);
+    }
+
+    public static string GoToFirstElementWithCommentAction(string textJson)
+    {
+      var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(textJson);
+      var comment = jsonDict["comment"];
+      var success = false;
+
+      int sizeOfCollection = Svc.SM.Registry.Element.Count;
+      var elemId = -1;
+      for (var i = 1; i < sizeOfCollection+1; i += 1)
+      {
+        var elem = Svc.SM.Registry.Element[i];
+        if (elem.Comment != null && elem.Comment.Contains(comment))
         {
-          Svc.SM.UI.ElementWdw.GoToElement(elemId);
-          success = true;
+          elemId = elem.Id;
+          break;
         }
+      }
+      if (elemId != -1)
+      {
+        Svc.SM.UI.ElementWdw.GoToElement(elemId);
+        ApiServerState.Instance.IsReadyToGrade = false;
+        success = true;
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -121,9 +149,13 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     {
       var success = false;
 
-      if (!ApiServerState.Instance.WasGraded)
+      if (ApiServerState.Instance.IsReadyToGrade)
       {
         success = Svc.SM.UI.ElementWdw.AppendElement(Interop.SuperMemo.Elements.Models.ElementType.Topic) != -1;
+        if (success)
+        {
+          ApiServerState.Instance.IsReadyToGrade = false;
+        }
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -132,9 +164,13 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     {
       var success = false;
 
-      if (!ApiServerState.Instance.WasGraded)
+      if (ApiServerState.Instance.IsReadyToGrade)
       {
         success = Svc.SM.UI.ElementWdw.AppendElement(Interop.SuperMemo.Elements.Models.ElementType.Item) != -1;
+        if (success)
+        {
+          ApiServerState.Instance.IsReadyToGrade = false;
+        }
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -146,6 +182,11 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       var success = false;
 
       success = Svc.SM.UI.ElementWdw.PostponeRepetition(days);
+      if (success)
+      {
+        ApiServerState.Instance.WasGraded = true;
+        ApiServerState.Instance.IsReadyToGrade = false;
+      }
       return JsonHelper.JsonFromValue(success);
     }
 
@@ -154,10 +195,12 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, double>>(textJson);
       var priority = jsonDict["priority"];
       var success = false;
-      if (!ApiServerState.Instance.WasGraded)
+      // TODO should I change readiness to grade?
+      success = Svc.SM.UI.ElementWdw.SetPriority(Svc.SM.UI.ElementWdw.CurrentElementId, priority);
+      if (success)
       {
-        success = Svc.SM.UI.ElementWdw.SetPriority(Svc.SM.UI.ElementWdw.CurrentElementId, priority);
-        
+        ApiServerState.Instance.WasGraded = true;
+        ApiServerState.Instance.IsReadyToGrade = false;
       }
 
       return JsonHelper.JsonFromValue(success);
@@ -168,7 +211,20 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(textJson);
       var text = jsonDict["text"];
       Svc.SM.UI.ElementWdw.SetTitle(Svc.SM.UI.ElementWdw.CurrentElementId, text);
-      return JsonHelper.JsonFromValue(false);
+      return JsonHelper.JsonFromValue(true);
+    }
+
+    public static string AppendCommentAction(string textJson)
+    {
+      var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(textJson);
+      var comment = jsonDict["comment"];
+      var success = Svc.SM.UI.ElementWdw.AppendComment(Svc.SM.UI.ElementWdw.CurrentElementId, comment);
+      return JsonHelper.JsonFromValue(success);
+    }
+
+    public static string CommentAction()
+    {
+      return JsonHelper.JsonFromValue(Svc.SM.UI.ElementWdw.CurrentElement.Comment);
     }
 
   }

@@ -51,6 +51,7 @@ namespace SuperMemoAssistant.SuperMemo
     Contents_InstancePtr,
     Registry_FileSpaceInstance,
     Registry_TextRegistryInstance,
+    Registry_CommentRegistryInstance,
     Registry_ImageRegistryInstance,
     Registry_SoundRegistryInstance,
     Registry_VideoRegistryInstance,

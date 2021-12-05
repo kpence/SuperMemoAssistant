@@ -64,10 +64,10 @@ namespace SuperMemoAssistant.SuperMemo.Natives
 
       public bool FindText(IntPtr contentsPtr, string text)
       {
-        // This does nothing!
+        // TODO Delete this, This does nothing!
         try
         {
-          string str = "Tesitng";
+          string str = "Testng";
           return NativeMethod.Contents_FindText.ExecuteOnMainThread(
             contentsPtr,
             str) == 1;

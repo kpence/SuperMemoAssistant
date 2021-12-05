@@ -352,6 +352,24 @@ namespace SuperMemoAssistant.SuperMemo.Natives
         }
       }
 
+      public bool AppendComment(IntPtr databasePtr, int elementId, string comment)
+      {
+        try
+        {
+          NativeMethod.Database_AppendComment.ExecuteOnMainThread(
+            databasePtr,
+            elementId,
+            new DelphiUTF16String(comment));
+
+          return true;
+        }
+        catch (Exception ex)
+        {
+          LogTo.Error(ex, "Native method call threw an exception.");
+          return false;
+        }
+      }
+
       public bool SetPriority(int elementId, double priority)
       {
         try

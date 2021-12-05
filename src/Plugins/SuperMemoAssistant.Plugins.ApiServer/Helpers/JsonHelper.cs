@@ -17,5 +17,8 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Helpers
 
     public static string JsonFromValue(bool value) =>
       "{\"Result\": \"" + (value ? "true" : "false") + "\"}";
+
+    public static string JsonFromValue(string value) =>
+      "{\"Result\": \"" + value + "\"}";
   }
 }

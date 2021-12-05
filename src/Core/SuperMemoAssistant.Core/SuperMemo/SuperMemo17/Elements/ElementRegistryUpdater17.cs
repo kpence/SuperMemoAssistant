@@ -154,6 +154,7 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.Elements
       InfElementsElemContainer17 elElem)
     {
       elem.TitleTextId = elElem._elem.titleTextId;
+      elem.CommentId   = elElem._elem.commentId;
       elem.Deleted     = cttElem != null && cttElem.deleted != 0;
 
       elem.TemplateId = elElem._elem.templateId;
@@ -201,11 +202,13 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.Elements
       if (elElem != null)
       {
         elem.TitleTextId = elElem._elem.titleTextId;
+        elem.CommentId   = elElem._elem.commentId;
 
         elem.TemplateId = elElem._elem.templateId;
         elem.ConceptId  = elElem._elem.conceptId;
 
         elem.ComponentPos = elElem._elem.componPos;
+        elem.CommentId = elElem._elem.commentId;
         // elem.AFactor = elElem._elem.AFactor
       }
 
