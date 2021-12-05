@@ -367,6 +367,7 @@
       "ElWdw_ComponentData_ComponentCountPtr": "0x000A", // TComponentData::DComponentNo:byte
       "ElWdw_ComponentData_IsModifiedPtr": "0x0013", // TComponentData::TheModifiedStatus:Boolean
       "Database_InstancePtr": "0x00CA60D0", // gvar_00CA30C8:TDatabase
+      "Contents_InstancePtr": "0x00CA3804", // gvar_00CA3804:TContents
       "Control_ParentOffset": "0x0040", // TControl::FParent:TWinControl
       "Control_WindowProcOffset": "0x0048", // TControl::FWindowProc:TWndMethod
       "Control_HandleOffset": "0x0288", // TWinControl::FHandle:HWND
@@ -715,6 +716,7 @@
       "ElWdw_ComponentData_ComponentCountPtr": "0x000A", // TComponentData::DComponentNo:byte
       "ElWdw_ComponentData_IsModifiedPtr": "0x0013", // TComponentData::TheModifiedStatus:Boolean
       "Database_InstancePtr": "0x00CA60D0", // gvar_00CA30C8:TDatabase
+      "Contents_InstancePtr": "0x00CA3804", // gvar_00CA3804:TContents
       "Control_ParentOffset": "0x0040", // TControl::FParent:TWinControl
       "Control_WindowProcOffset": "0x0048", // TControl::FWindowProc:TWndMethod
       "Control_HandleOffset": "0x0288", // TWinControl::FHandle:HWND
@@ -853,7 +855,19 @@
       },
       "ElWdw_BeginLearning": { // TElWind::BeginLearning
         "Pattern": "E8 ? ? ? ? EB 24 8B 55 FC",
-        "Offset":  1
+        "Offset": 1
+      },
+      "Contents_FindText": { // TContents::FindText
+        "Pattern": "E8 ? ? ? ? EB 77 8D 45 F8",
+        "Offset": 1
+      },
+      "Database_SetTitle": { // TDatabase::SetTitle
+        "Pattern": "E8 ? ? ? ? 83 7D 08 00 74 14",
+        "Offset": 1
+      },
+      "Priority_SetPriority": { // TPriority::SetPriority
+        "Pattern": "E8 ? ? ? ? 8B 45 92",
+        "Offset": 1
       }
     },
     "NativeDataPatterns": {},

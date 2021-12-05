@@ -95,9 +95,17 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       HttpServer.Instance.Route("/set-grade", grade => ApiServerController.SetGradeAction(grade));
       HttpServer.Instance.Route("/was-graded", _ => ApiServerController.WasGradedAction());
       HttpServer.Instance.Route("/next-element", _ => ApiServerController.NextElementAction());
-      HttpServer.Instance.Route("/done", _ => ApiServerController.DoneAction());
       HttpServer.Instance.Route("/begin-learning", _ => ApiServerController.BeginLearningAction());
       HttpServer.Instance.Route("/set-element-content", text => ApiServerController.SetElementContentAction(text));
+      HttpServer.Instance.Route("/set-element-title", text => ApiServerController.SetElementTitleAction(text));
+      HttpServer.Instance.Route("/goto-first-element-with-title", text => ApiServerController.GoToFirstElementWithTitleAction(text));
+      HttpServer.Instance.Route("/new-topic", _ => ApiServerController.NewTopicAction());
+      HttpServer.Instance.Route("/new-item", _ => ApiServerController.NewItemAction());
+      HttpServer.Instance.Route("/set-priority", priority => ApiServerController.SetPriorityAction(priority));
+      HttpServer.Instance.Route("/postpone", days => ApiServerController.PostponeAction(days));
+
+      // Unneeded and unfinished?
+      HttpServer.Instance.Route("/done", _ => ApiServerController.DoneAction());
 
       Svc.SM.UI.ElementWdw.OnElementChanged += new ActionProxy<SMDisplayedElementChangedEventArgs>(OnElementChanged);
       ApiServerState.Instance.UpdateElementInfo(null);
@@ -127,7 +135,19 @@ namespace SuperMemoAssistant.Plugins.ApiServer
 
     private static void TestSomething()
     {
-      MessageBox.Show(ApiServerState.Instance.ElementInfo.ToJson());
+      //MessageBox.Show(ApiServerState.Instance.ElementInfo.ToJson());
+      //Svc.SM.UI.ElementWdw.FindText();
+      int sizeOfCollection = Svc.SM.Registry.Element.Count;
+      var elemId = -1;
+      for (var i = 1; i < sizeOfCollection+1; i += 1)
+      {
+        var elem = Svc.SM.Registry.Element[i];
+        if (elem.Title == "12345")
+        {
+          elemId = elem.Id;
+          break;
+        }
+      }
     }
     #endregion
   }

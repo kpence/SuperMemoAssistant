@@ -55,6 +55,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       return JsonHelper.JsonFromValue(success);
     }
 
+    // TODO delete this
     public static string DoneAction()
     {
       return JsonHelper.JsonFromValue(Svc.SM.UI.ElementWdw.Done());
@@ -83,6 +84,83 @@ namespace SuperMemoAssistant.Plugins.ApiServer
         ctrlHtml.Text = text;
       }
       return JsonHelper.JsonFromValue(success);
+    }
+
+    public static string GoToFirstElementWithTitleAction(string textJson)
+    {
+      var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(textJson);
+      var text = jsonDict["text"];
+      var success = false;
+
+      if (!ApiServerState.Instance.WasGraded)
+      {
+        int sizeOfCollection = Svc.SM.Registry.Element.Count;
+        var elemId = -1;
+        for (var i = 1; i < sizeOfCollection+1; i += 1)
+        {
+          var elem = Svc.SM.Registry.Element[i];
+          if (elem.Title == text)
+          {
+            elemId = elem.Id;
+            break;
+          }
+        }
+        if (elemId != -1)
+        {
+          Svc.SM.UI.ElementWdw.GoToElement(elemId);
+          success = true;
+        }
+      }
+      return JsonHelper.JsonFromValue(success);
+    }
+
+    public static string NewTopicAction()
+    {
+      var success = false;
+
+      if (!ApiServerState.Instance.WasGraded)
+      {
+        success = Svc.SM.UI.ElementWdw.AppendElement(Interop.SuperMemo.Elements.Models.ElementType.Topic) != -1;
+      }
+      return JsonHelper.JsonFromValue(success);
+    }
+
+    public static string NewItemAction()
+    {
+      var success = false;
+
+      if (!ApiServerState.Instance.WasGraded)
+      {
+        success = Svc.SM.UI.ElementWdw.AppendElement(Interop.SuperMemo.Elements.Models.ElementType.Item) != -1;
+      }
+      return JsonHelper.JsonFromValue(success);
+    }
+
+    public static string PostponeAction(string textJson)
+    {
+      var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(textJson);
+      var days = jsonDict["days"];
+      var success = false;
+
+      success = Svc.SM.UI.ElementWdw.PostponeRepetition(days);
+      return JsonHelper.JsonFromValue(success);
+    }
+
+    public static string SetPriorityAction(string textJson)
+    {
+      var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, double>>(textJson);
+      var priority = jsonDict["priority"];
+      var success = Svc.SM.UI.ElementWdw.SetPriority(Svc.SM.UI.ElementWdw.CurrentElementId, priority);
+
+      return JsonHelper.JsonFromValue(success);
+    }
+
+    public static string SetElementTitleAction(string textJson)
+    {
+      var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(textJson);
+      var text = jsonDict["text"];
+      Svc.SM.UI.ElementWdw.SetTitle(Svc.SM.UI.ElementWdw.CurrentElementId, text);
+      return JsonHelper.JsonFromValue(false);
     }
 
   }

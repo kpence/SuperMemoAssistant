@@ -66,6 +66,8 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
     private IPointer CurrentRootIdPtr         { get; set; }
     private IPointer CurrentHookIdPtr         { get; set; }
     private IPointer LearningModePtr          { get; set; }
+    private IPointer ContentsPtr              { get; set; }
+    private IPointer DatabasePtr              { get; set; }
 
     #endregion
 
@@ -96,6 +98,8 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       CurrentRootIdPtr?.Dispose();
       CurrentHookIdPtr?.Dispose();
       LearningModePtr?.Dispose();
+      ContentsPtr?.Dispose();
+      DatabasePtr?.Dispose();
 
       SMMainWdwPtr             = null;
       ElementWdwPtr            = null;
@@ -105,6 +109,8 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       CurrentRootIdPtr         = null;
       CurrentHookIdPtr         = null;
       LearningModePtr          = null;
+      ContentsPtr              = null;
+      DatabasePtr              = null;
 
       LogTo.Debug("Cleaning up {Name}... Done", GetType().Name);
     }
@@ -248,6 +254,21 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       }
     }
 
+    public bool FindText()
+    {
+      try
+      {
+        return Core.Natives.Contents.FindText(
+          ContentsPtr.Read<IntPtr>(),
+          "test");
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "Native method call threw an exception.");
+        return false;
+      }
+    }
+
     public int GenerateExtract(ElementType elementType, bool memorize = true, bool askUserToScheduleInterval = false)
     {
       try
@@ -354,6 +375,37 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       catch (Win32Exception ex)
       {
         LogTo.Warning(ex, "Failed to read ElementWdwPtr");
+        return false;
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "SM internal method call threw an exception.");
+        return false;
+      }
+    }
+
+    public bool SetPriority(int elementId, double priority)
+    {
+      try
+      {
+        return Core.Natives.ElWind.SetPriority(elementId, priority);
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "SM internal method call threw an exception.");
+        return false;
+      }
+    }
+
+    public bool SetTitle(int elementId, string title)
+    {
+      try
+      {
+        return Core.Natives.ElWind.SetTitle(DatabasePtr.Read<IntPtr>(), elementId, title);
+      }
+      catch (Win32Exception ex)
+      {
+        LogTo.Warning(ex, "Failed to read DatabasePtr");
         return false;
       }
       catch (Exception ex)
@@ -651,6 +703,8 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       CurrentRootIdPtr         = SMProcess[Core.Natives.Globals.CurrentRootIdPtr];
       CurrentHookIdPtr         = SMProcess[Core.Natives.Globals.CurrentHookIdPtr];
       LearningModePtr          = SMProcess[Core.Natives.ElWind.LearningModePtr];
+      ContentsPtr              = SMProcess[Core.Natives.Contents.InstancePtr];
+      DatabasePtr              = SMProcess[Core.Natives.Database.InstancePtr];
 
       ElementIdPtr.RegisterValueChangedEventHandler<int>(OnElementChangedInternal);
 

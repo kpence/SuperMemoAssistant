@@ -352,6 +352,41 @@ namespace SuperMemoAssistant.SuperMemo.Natives
         }
       }
 
+      public bool SetPriority(int elementId, double priority)
+      {
+        try
+        {
+          NativeMethod.Priority_SetPriority.ExecuteOnMainThread(
+            elementId,
+            priority);
+
+          return true;
+        }
+        catch (Exception ex)
+        {
+          LogTo.Error(ex, "Native method call threw an exception.");
+          return false;
+        }
+      }
+
+      public bool SetTitle(IntPtr databasePtr, int elementId, string title)
+      {
+        try
+        {
+          NativeMethod.Database_SetTitle.ExecuteOnMainThread(
+            databasePtr,
+            elementId,
+            new DelphiUTF16String(title));
+
+          return true;
+        }
+        catch (Exception ex)
+        {
+          LogTo.Error(ex, "Native method call threw an exception.");
+          return false;
+        }
+      }
+
       public bool SetGrade(IntPtr elementWdwPtr, int grade)
       {
         try

@@ -16,6 +16,7 @@
     <!-- releaseNotes will be replaced by MSBuild.Tools (see SuperMemoAssistant.csproj and https://github.com/alexis-/MSBuild.Tools) -->
     <releaseNotes>- Added: Forced creation of nuget and release folders
 - Fixed: Absolute path in nuget.config
+- Update dependency on interop
 - Implement additional end points and native methods
 - Implement element-info end point
 - Add base rest server

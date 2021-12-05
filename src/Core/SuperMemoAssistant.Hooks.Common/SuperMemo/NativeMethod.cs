@@ -56,6 +56,8 @@ namespace SuperMemoAssistant.SuperMemo
     ElWdw_SetGrade,
     ElWdw_GetElementAsText,
     ElWdw_BeginLearning,
+    Database_SetTitle,
+    Priority_SetPriority,
     TPriority_GetElementPriority,
     ElWdw_ScheduleInInterval,
     ElWdw_ExecuteUncommittedRepetition,
@@ -76,6 +78,7 @@ namespace SuperMemoAssistant.SuperMemo
     FileSpace_IsSlotOccupied,
     Queue_Last,
     Queue_GetItem,
+    Contents_FindText,
 
     // Special handling
     AppendAndAddElementFromText,

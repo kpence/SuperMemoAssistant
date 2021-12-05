@@ -48,6 +48,7 @@ namespace SuperMemoAssistant.SuperMemo
     ElWdw_LearningModePtr,
     SMMain_InstancePtr,
     Database_InstancePtr,
+    Contents_InstancePtr,
     Registry_FileSpaceInstance,
     Registry_TextRegistryInstance,
     Registry_ImageRegistryInstance,
