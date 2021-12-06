@@ -10,15 +10,15 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Helpers
   class JsonHelper
   {
     public static string JsonFromValue(LearningMode value) =>
-      "{\"Result\": \"" + value.ToString() + "\"}";
+      "{\"result\": \"" + value.ToString() + "\"}";
 
     public static string JsonFromValue(int value) =>
-      "{\"Result\": \"" + value.ToString() + "\"}";
+      "{\"result\": \"" + value.ToString() + "\"}";
 
     public static string JsonFromValue(bool value) =>
-      "{\"Result\": \"" + (value ? "true" : "false") + "\"}";
+      "{\"result\": \"" + (value ? "true" : "false") + "\"}";
 
     public static string JsonFromValue(string value) =>
-      "{\"Result\": \"" + value + "\"}";
+      "{\"result\": \"" + value + "\"}";
   }
 }
