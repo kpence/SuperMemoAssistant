@@ -27,6 +27,11 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       return JsonHelper.JsonFromValue(Svc.SM.UI.ElementWdw.CurrentLearningMode);
     }
 
+    public static string ReadyToGradeAction()
+    {
+      return JsonHelper.JsonFromValue(ApiServerState.Instance.IsReadyToGrade);
+    }
+
     public static string WasGradedAction()
     {
       return JsonHelper.JsonFromValue(ApiServerState.Instance.WasGraded);
