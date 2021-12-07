@@ -104,22 +104,25 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       var text = jsonDict["title"];
       var success = false;
 
-      int sizeOfCollection = Svc.SM.Registry.Element.Count;
-      var elemId = -1;
-      for (var i = 1; i < sizeOfCollection+1; i += 1)
+      if (!ApiServerState.Instance.WasGraded)
       {
-        var elem = Svc.SM.Registry.Element[i];
-        if (elem.Title == text)
+        int sizeOfCollection = Svc.SM.Registry.Element.Count;
+        var elemId = -1;
+        for (var i = 1; i < sizeOfCollection+1; i += 1)
         {
-          elemId = elem.Id;
-          break;
+          var elem = Svc.SM.Registry.Element[i];
+          if (elem.Title == text)
+          {
+            elemId = elem.Id;
+            break;
+          }
         }
-      }
-      if (elemId != -1)
-      {
-        Svc.SM.UI.ElementWdw.GoToElement(elemId);
-        success = true;
-        ApiServerState.Instance.IsReadyToGrade = false;
+        if (elemId != -1)
+        {
+          Svc.SM.UI.ElementWdw.GoToElement(elemId);
+          success = true;
+          ApiServerState.Instance.IsReadyToGrade = false;
+        }
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -130,22 +133,25 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       var comment = jsonDict["comment"];
       var success = false;
 
-      int sizeOfCollection = Svc.SM.Registry.Element.Count;
-      var elemId = -1;
-      for (var i = 1; i < sizeOfCollection+1; i += 1)
+      if (!ApiServerState.Instance.WasGraded)
       {
-        var elem = Svc.SM.Registry.Element[i];
-        if (elem.Comment != null && elem.Comment.Contains(comment))
+          int sizeOfCollection = Svc.SM.Registry.Element.Count;
+        var elemId = -1;
+        for (var i = 1; i < sizeOfCollection+1; i += 1)
         {
-          elemId = elem.Id;
-          break;
+          var elem = Svc.SM.Registry.Element[i];
+          if (elem.Comment != null && elem.Comment.Contains(comment))
+          {
+            elemId = elem.Id;
+            break;
+          }
         }
-      }
-      if (elemId != -1)
-      {
-        Svc.SM.UI.ElementWdw.GoToElement(elemId);
-        ApiServerState.Instance.IsReadyToGrade = false;
-        success = true;
+        if (elemId != -1)
+        {
+          Svc.SM.UI.ElementWdw.GoToElement(elemId);
+          ApiServerState.Instance.IsReadyToGrade = false;
+          success = true;
+        }
       }
       return JsonHelper.JsonFromValue(success);
     }
