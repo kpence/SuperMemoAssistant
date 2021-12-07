@@ -39,9 +39,9 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     {
       bool runServer = true;
 
-      try
+      while (runServer)
       {
-        while (runServer)
+        try
         {
           HttpListenerContext ctx = await listener.GetContextAsync();
           HttpListenerRequest req = ctx.Request;
@@ -74,10 +74,10 @@ namespace SuperMemoAssistant.Plugins.ApiServer
           await resp.OutputStream.WriteAsync(data, 0, data.Length);
           resp.Close();
         }
-      }
-      catch (Exception e)
-      {
-        MessageBox.Show("Server died: " + e.Message);
+        catch (Exception e)
+        {
+          MessageBox.Show("Server died: " + e.Message);
+        }
       }
     }
 

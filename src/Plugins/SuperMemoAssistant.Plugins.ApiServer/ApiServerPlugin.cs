@@ -102,11 +102,11 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       HttpServer.Instance.Route("/set-element-title", text => ApiServerController.SetElementTitleAction(text));
       HttpServer.Instance.Route("/goto-first-element-with-title", text => ApiServerController.GoToFirstElementWithTitleAction(text));
       HttpServer.Instance.Route("/goto-first-element-with-comment", text => ApiServerController.GoToFirstElementWithCommentAction(text));
+      HttpServer.Instance.Route("/comment", _ => ApiServerController.CommentAction());
       HttpServer.Instance.Route("/new-topic", _ => ApiServerController.NewTopicAction());
       HttpServer.Instance.Route("/new-item", _ => ApiServerController.NewItemAction());
       HttpServer.Instance.Route("/set-priority", priority => ApiServerController.SetPriorityAction(priority));
       HttpServer.Instance.Route("/append-comment", comment => ApiServerController.AppendCommentAction(comment));
-      HttpServer.Instance.Route("/comment", _ => ApiServerController.CommentAction());
       HttpServer.Instance.Route("/postpone", days => ApiServerController.PostponeAction(days));
       HttpServer.Instance.Route("/force-repetition", days => ApiServerController.ForceRepetitionAction(days));
 

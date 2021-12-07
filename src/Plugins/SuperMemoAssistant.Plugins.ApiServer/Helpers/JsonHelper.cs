@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace SuperMemoAssistant.Plugins.ApiServer.Helpers
 {
@@ -19,6 +20,6 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Helpers
       "{\"result\": \"" + (value ? "true" : "false") + "\"}";
 
     public static string JsonFromValue(string value) =>
-      "{\"result\": \"" + value + "\"}";
+      "{\"result\": \"" + HttpUtility.JavaScriptStringEncode(value) + "\"}";
   }
 }

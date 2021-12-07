@@ -40,7 +40,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     public static string NextElementAction()
     {
       var success = false;
-      if (Svc.SM.UI.ElementWdw.CurrentLearningMode == LearningMode.Standard)
+      if (Svc.SM.UI.ElementWdw.CurrentLearningMode != LearningMode.None)
       {
         success = Svc.SM.UI.ElementWdw.NextElementInLearningQueue();
         ApiServerState.Instance.IsReadyToGrade = true;
@@ -218,13 +218,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, double>>(textJson);
       var priority = jsonDict["priority"];
       var success = false;
-      // TODO should I change readiness to grade?
       success = Svc.SM.UI.ElementWdw.SetPriority(Svc.SM.UI.ElementWdw.CurrentElementId, priority);
-      if (success)
-      {
-        ApiServerState.Instance.WasGraded = true;
-        ApiServerState.Instance.IsReadyToGrade = false;
-      }
 
       return JsonHelper.JsonFromValue(success);
     }
