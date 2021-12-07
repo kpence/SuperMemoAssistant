@@ -135,15 +135,14 @@ namespace SuperMemoAssistant.Plugins.ApiServer
 
       if (!ApiServerState.Instance.WasGraded)
       {
-          int sizeOfCollection = Svc.SM.Registry.Element.Count;
         var elemId = -1;
-        for (var i = 1; i < sizeOfCollection+1; i += 1)
+        var elem = Svc.SM.Registry.Element.FirstOrDefaultByName(new System.Text.RegularExpressions.Regex(comment));
+        if (elem != null)
         {
-          var elem = Svc.SM.Registry.Element[i];
-          if (elem.Comment != null && elem.Comment.Contains(comment))
+          var elemComment = elem.Comment;
+          if (elemComment != null && elemComment.Contains(comment))
           {
             elemId = elem.Id;
-            break;
           }
         }
         if (elemId != -1)
@@ -190,6 +189,13 @@ namespace SuperMemoAssistant.Plugins.ApiServer
         ApiServerState.Instance.WasGraded = true;
         ApiServerState.Instance.IsReadyToGrade = false;
       }
+      return JsonHelper.JsonFromValue(success);
+    }
+
+    public static string DismissAction()
+    {
+      var success = false;
+      success = Svc.SM.UI.ElementWdw.DismissElement(Svc.SM.UI.ElementWdw.CurrentElementId);
       return JsonHelper.JsonFromValue(success);
     }
 

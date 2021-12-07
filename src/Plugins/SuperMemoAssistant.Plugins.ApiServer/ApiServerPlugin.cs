@@ -109,6 +109,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       HttpServer.Instance.Route("/append-comment", comment => ApiServerController.AppendCommentAction(comment));
       HttpServer.Instance.Route("/postpone", days => ApiServerController.PostponeAction(days));
       HttpServer.Instance.Route("/force-repetition", days => ApiServerController.ForceRepetitionAction(days));
+      HttpServer.Instance.Route("/dismiss", _ => ApiServerController.DismissAction());
 
       // Unneeded and unfinished?
       HttpServer.Instance.Route("/done", _ => ApiServerController.DoneAction());

@@ -525,6 +525,22 @@ namespace SuperMemoAssistant.SuperMemo.Natives
         }
       }
 
+      public bool DismissElement(IntPtr elementWdwPtr, int elNo)
+      {
+        try
+        {
+          return NativeMethod.ElWdw_DismissElement.ExecuteOnMainThread(
+            elementWdwPtr,
+            elNo,
+            0) == 1;
+        }
+        catch (Exception ex)
+        {
+          LogTo.Error(ex, "Native method call threw an exception.");
+          return false;
+        }
+      }
+
       // Static addresses
       // _Unit193.TElWind.DoneClick
       // 00A0E29C       call        00A20A58

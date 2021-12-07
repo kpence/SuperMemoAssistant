@@ -320,6 +320,24 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       }
     }
 
+    public bool DismissElement(int elNo)
+    {
+      try
+      {
+        return Core.Natives.ElWind.DismissElement(ElementWdwPtr.Read<IntPtr>(), elNo);
+      }
+      catch (Win32Exception ex)
+      {
+        LogTo.Warning(ex, "Failed to read ElementWdwPtr");
+        return false;
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "SM internal method call threw an exception.");
+        return false;
+      }
+    }
+
     public bool Done()
     {
       try

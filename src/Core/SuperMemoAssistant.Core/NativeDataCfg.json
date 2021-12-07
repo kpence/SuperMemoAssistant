@@ -872,7 +872,11 @@
       },
       "Database_AppendComment": { // TDatabase::AppendComment
         "Pattern": "E8 ? ? ? ? 8D 55 F0 A1 ? ? ? ? 8B 00 B1 01",
-        "Offset":  1
+        "Offset": 1
+      },
+      "ElWdw_DismissElement": { // TElWind::DismissElement
+        "Pattern": "E8 ? ? ? ? B1 01 8B 55 E0 A1 ? ? ? ? E8 ? ? ? ? 80 7D F7 00",
+        "Offset": 1
       }
     },
     "NativeDataPatterns": {},

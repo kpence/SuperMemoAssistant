@@ -16,10 +16,10 @@
     <!-- releaseNotes will be replaced by MSBuild.Tools (see SuperMemoAssistant.csproj and https://github.com/alexis-/MSBuild.Tools) -->
     <releaseNotes>- Added: Forced creation of nuget and release folders
 - Fixed: Absolute path in nuget.config
+- update
 - make server run in loop
 - Make json keys lowercase
 - Add Ready-To-Grade end point
-- Update
 - Get set priority to work
 - Add missing TContents
 - Adding native methods and end points
