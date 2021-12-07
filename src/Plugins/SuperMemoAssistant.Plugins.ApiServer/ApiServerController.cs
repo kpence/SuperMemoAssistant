@@ -154,13 +154,9 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     {
       var success = false;
 
-      if (ApiServerState.Instance.IsReadyToGrade)
+      if (!ApiServerState.Instance.WasGraded)
       {
         success = Svc.SM.UI.ElementWdw.AppendElement(Interop.SuperMemo.Elements.Models.ElementType.Topic) != -1;
-        if (success)
-        {
-          ApiServerState.Instance.IsReadyToGrade = false;
-        }
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -169,13 +165,9 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     {
       var success = false;
 
-      if (ApiServerState.Instance.IsReadyToGrade)
+      if (!ApiServerState.Instance.WasGraded)
       {
         success = Svc.SM.UI.ElementWdw.AppendElement(Interop.SuperMemo.Elements.Models.ElementType.Item) != -1;
-        if (success)
-        {
-          ApiServerState.Instance.IsReadyToGrade = false;
-        }
       }
       return JsonHelper.JsonFromValue(success);
     }
