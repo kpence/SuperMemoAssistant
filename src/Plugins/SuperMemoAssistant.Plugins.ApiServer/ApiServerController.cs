@@ -37,6 +37,11 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       return JsonHelper.JsonFromValue(ApiServerState.Instance.WasGraded);
     }
 
+    public static string ElementBackAction()
+    {
+      return JsonHelper.JsonFromValue(Svc.SM.UI.ElementWdw.BackButtonClick());
+    }
+
     public static string NextRepetitionAction()
     {
       var success = false;
@@ -44,6 +49,9 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       {
         success = Svc.SM.UI.ElementWdw.NextRepetition();
         ApiServerState.Instance.IsReadyToGrade = true;
+
+        // This function doesn't call the onelementchanged callback, so I need to reset apiserverstate's elmenet info content
+        ApiServerState.Instance.UpdateElementInfo(null);
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -55,10 +63,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       {
         success = Svc.SM.UI.ElementWdw.NextElementInLearningQueue();
         ApiServerState.Instance.IsReadyToGrade = true;
-
-        // This function doesn't call the onelementchanged callback, so I need to reset apiserverstate's elmenet info content
         ApiServerState.Instance.UpdateElementInfo(null);
-        ApiServerState.Instance.ElementInfo.Content = System.IO.File.ReadAllText(ApiServerState.Instance.ElementInfo.HTMLFile);
       }
       return JsonHelper.JsonFromValue(success);
     }

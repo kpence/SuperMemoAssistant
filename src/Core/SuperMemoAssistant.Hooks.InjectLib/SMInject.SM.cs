@@ -305,6 +305,7 @@ namespace SuperMemoAssistant.Hooks.InjectLib
             {
               outParameter = Marshal.PtrToStringAnsi(new IntPtr(*(int*)(marshalled.Reference.ToPointer())));
             }
+            marshalled.Dispose();
             return ret;
           case NativeMethod.Priority_SetPriority:
             return Delphi.registerCallDouble1(_callTable[method],

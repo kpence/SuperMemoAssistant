@@ -155,6 +155,24 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       return success && CurrentConceptId == conceptId;
     }
 
+    public bool BackButtonClick()
+    {
+      try
+      {
+        return Core.Natives.ElWind.BackButtonClick(ElementWdwPtr.Read<IntPtr>());
+      }
+      catch (Win32Exception ex)
+      {
+        LogTo.Warning(ex, "Failed to read ElementWdwPtr");
+        return false;
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "SM internal method call threw an exception.");
+        return false;
+      }
+    }
+
     public bool NextRepetition()
     {
       try

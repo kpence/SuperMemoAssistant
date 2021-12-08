@@ -279,6 +279,20 @@ namespace SuperMemoAssistant.SuperMemo.Natives
         }
       }
 
+      public bool BackButtonClick(IntPtr elementWdwPtr)
+      {
+        try
+        {
+          return NativeMethod.ElWdw_BackButtonClick.ExecuteOnMainThread(
+            elementWdwPtr) == 1;
+        }
+        catch (Exception ex)
+        {
+          LogTo.Error(ex, "Native method call threw an exception.");
+          return false;
+        }
+      }
+
       public bool DeleteCurrentElement(IntPtr elementWdwPtr)
       {
         try

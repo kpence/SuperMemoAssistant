@@ -96,6 +96,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       HttpServer.Instance.Route("/ready-to-grade", _ => ApiServerController.ReadyToGradeAction());
       HttpServer.Instance.Route("/set-grade", grade => ApiServerController.SetGradeAction(grade));
       HttpServer.Instance.Route("/was-graded", _ => ApiServerController.WasGradedAction());
+      HttpServer.Instance.Route("/element-back", _ => ApiServerController.ElementBackAction());
       HttpServer.Instance.Route("/next-element", _ => ApiServerController.NextElementAction());
       HttpServer.Instance.Route("/next-repetition", _ => ApiServerController.NextRepetitionAction());
       HttpServer.Instance.Route("/begin-learning", _ => ApiServerController.BeginLearningAction());
