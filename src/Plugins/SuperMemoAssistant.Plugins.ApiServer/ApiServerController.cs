@@ -37,6 +37,17 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       return JsonHelper.JsonFromValue(ApiServerState.Instance.WasGraded);
     }
 
+    public static string NextRepetitionAction()
+    {
+      var success = false;
+      if (Svc.SM.UI.ElementWdw.CurrentLearningMode != LearningMode.None)
+      {
+        success = Svc.SM.UI.ElementWdw.NextRepetition();
+        ApiServerState.Instance.IsReadyToGrade = true;
+      }
+      return JsonHelper.JsonFromValue(success);
+    }
+
     public static string NextElementAction()
     {
       var success = false;
