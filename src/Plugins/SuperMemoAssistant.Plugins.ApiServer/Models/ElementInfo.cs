@@ -64,7 +64,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Models
       ElementId = TryParse(elementInfo, @"^Begin Element #(.*)\r$");
       ParentTitle = TryParse(elementInfo, @"^ParentTitle=(.*)\r$");
       Priority = TryParse(elementInfo, @"^Priority=(.*)\r$");
-      Title = TryParse(elementInfo, @"^Source=(.*)\r$");
+      Title = TryParse(elementInfo, @"^Title=(.*)\r$");
       ElementType = TryParse(elementInfo, @"^Type=(.*)\r$");
       ElementStatus = TryParse(elementInfo, @"^Status=(.*)\r$");
       FirstGrade = TryParse(elementInfo, @"^FirstGrade=(.*)\r$");
