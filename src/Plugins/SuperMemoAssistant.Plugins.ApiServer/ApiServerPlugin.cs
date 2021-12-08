@@ -141,7 +141,6 @@ namespace SuperMemoAssistant.Plugins.ApiServer
         ApiServerState.Instance.OnElementChanged(e.NewElement, ctrlHtml);
       }
       catch (RemotingException) { }
-      MessageBox.Show("Element changed, current ctrl: " + ctrlHtml.Text);
     }
 
     private static void TestSomething()
