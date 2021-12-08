@@ -52,6 +52,8 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Models
     public string Reference;
     [JsonProperty(PropertyName = "SourceArticle")]
     public string SourceArticleId;
+    [JsonProperty(PropertyName = "HTMLFile")]
+    public string HTMLFile;
     [JsonProperty(PropertyName = "_FullInfo")]
     public string _FullInfo;
 
@@ -78,6 +80,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Models
       ForgettingIndex = TryParse(elementInfo, @"^ForgettingIndex=(.*)\r$");
       Reference = TryParse(elementInfo, @"^Reference=(.*)\r$");
       SourceArticleId = TryParse(elementInfo, @"^SourceArticle=(.*)\r$");
+      HTMLFile = TryParse(elementInfo, @"^HTMLFile=(.*)\r$");
     }
 
     public string ToJson() => JsonConvert.SerializeObject(this);

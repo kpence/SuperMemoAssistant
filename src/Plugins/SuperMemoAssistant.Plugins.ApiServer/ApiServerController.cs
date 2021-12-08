@@ -55,6 +55,10 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       {
         success = Svc.SM.UI.ElementWdw.NextElementInLearningQueue();
         ApiServerState.Instance.IsReadyToGrade = true;
+
+        // This function doesn't call the onelementchanged callback, so I need to reset apiserverstate's elmenet info content
+        ApiServerState.Instance.UpdateElementInfo(null);
+        ApiServerState.Instance.ElementInfo.Content = System.IO.File.ReadAllText(ApiServerState.Instance.ElementInfo.HTMLFile);
       }
       return JsonHelper.JsonFromValue(success);
     }
