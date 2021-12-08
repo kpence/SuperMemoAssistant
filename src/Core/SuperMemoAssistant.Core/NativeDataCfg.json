@@ -877,6 +877,10 @@
       "ElWdw_DismissElement": { // TElWind::DismissElement
         "Pattern": "E8 ? ? ? ? B1 01 8B 55 E0 A1 ? ? ? ? E8 ? ? ? ? 80 7D F7 00",
         "Offset": 1
+      },
+      "ElWdw_NextRepetition": { // TElWind::NextRepetitionClick
+        "Pattern": "E8 ? ? ? ? 59 59 5D C3 8B C0 55 8B EC 51 89 45 FC 33 D2",
+        "Offset": 1
       }
     },
     "NativeDataPatterns": {},
