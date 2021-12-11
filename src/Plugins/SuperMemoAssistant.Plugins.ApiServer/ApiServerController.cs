@@ -19,6 +19,10 @@ namespace SuperMemoAssistant.Plugins.ApiServer
   {
     public static string ElementInfoAction()
     {
+      if (ApiServerState.Instance.ElementInfo == null)
+      {
+        ApiServerState.Instance.UpdateElementInfo(null);
+      }
       return ApiServerState.Instance.ElementInfo.ToJson();
     }
 
@@ -37,9 +41,17 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       return JsonHelper.JsonFromValue(ApiServerState.Instance.WasGraded);
     }
 
+    public static string ElementForwardAction()
+    {
+      return JsonHelper.JsonFromValue(Svc.SM.UI.ElementWdw.ForwardButtonClick());
+    }
+
     public static string ElementBackAction()
     {
-      return JsonHelper.JsonFromValue(Svc.SM.UI.ElementWdw.BackButtonClick());
+      var success = false;
+      success = Svc.SM.UI.ElementWdw.BackButtonClick();
+      Console.WriteLine("EndOfElementBack");
+      return JsonHelper.JsonFromValue(success);
     }
 
     public static string NextRepetitionAction()
@@ -51,7 +63,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
         ApiServerState.Instance.IsReadyToGrade = true;
 
         // This function doesn't call the onelementchanged callback, so I need to reset apiserverstate's elmenet info content
-        ApiServerState.Instance.UpdateElementInfo(null);
+        ApiServerState.Instance.ElementInfo = null;
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -63,7 +75,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       {
         success = Svc.SM.UI.ElementWdw.NextElementInLearningQueue();
         ApiServerState.Instance.IsReadyToGrade = true;
-        ApiServerState.Instance.UpdateElementInfo(null);
+        ApiServerState.Instance.ElementInfo = null;
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -104,16 +116,42 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       return JsonHelper.JsonFromValue(success);
     }
 
+    // Extracts on current element
+    public static string ExtractAction()
+    {
+      var success = false;
+      Svc.SM.UI.ElementWdw.SetElementState(ElementDisplayState.Edit);
+
+      try
+      {
+        if (Svc.SM.UI.ElementWdw.ControlGroup?.GetFirstHtmlControl()?.Document?.execCommand("selectAll") ?? false)
+        {
+          ApiServerState.Instance.AwaitElementChange = true;
+          Svc.SM.UI.ElementWdw.GenerateExtract(ElementType.Topic);
+          while (ApiServerState.Instance.AwaitElementChange)
+                System.Threading.Thread.Sleep(50);
+          success = true;
+        }
+      }
+      catch
+      {
+          System.Windows.MessageBox.Show("error??");
+      }
+      return JsonHelper.JsonFromValue(success);
+    }
+
     public static string SetElementContentAction(string textJson)
     {
       var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(textJson);
       var text = jsonDict["text"];
       var ctrlHtml = Svc.SM.UI.ElementWdw.ControlGroup?.GetFirstHtmlControl();
       var success = false;
-      if (ctrlHtml != null)
+      if (ctrlHtml != null && !(Svc.SM.UI.ElementWdw.ControlGroup?.IsDisposed ?? true) && !String.IsNullOrEmpty(text))
       {
         success = true;
+        Console.WriteLine("SetElementContentAction");
         ctrlHtml.Text = text;
+        Console.WriteLine("After SetElementContentAction");
       }
       return JsonHelper.JsonFromValue(success);
     }
@@ -167,7 +205,10 @@ namespace SuperMemoAssistant.Plugins.ApiServer
         }
         if (elemId != -1)
         {
-          Svc.SM.UI.ElementWdw.GoToElement(elemId);
+          if (elemId != Svc.SM.UI.ElementWdw.CurrentElementId)
+          {
+            Svc.SM.UI.ElementWdw.GoToElement(elemId);
+          }
           ApiServerState.Instance.IsReadyToGrade = false;
           success = true;
         }
@@ -259,7 +300,9 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     {
       var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(textJson);
       var comment = jsonDict["comment"];
-      var success = Svc.SM.UI.ElementWdw.AppendComment(Svc.SM.UI.ElementWdw.CurrentElementId, comment);
+      var success = false;
+      if (!String.IsNullOrEmpty(comment))
+        success = Svc.SM.UI.ElementWdw.AppendComment(Svc.SM.UI.ElementWdw.CurrentElementId, comment);
       return JsonHelper.JsonFromValue(success);
     }
 

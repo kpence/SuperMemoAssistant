@@ -897,7 +897,8 @@
       "ElWdw_ForceRepetitionExt": "55 8B EC 81 C4 ? ? ? ? 88 4D F7 89 55 F8 89 45 FC 8D 4D 81",
       // ???? TElWind::MIForgetClick or TElWind::MIJumpIntervalClick => Last call
       "ElWdw_RestoreLearningMode": "55 8B EC 51 89 45 FC 8B 45 FC 80 B8 ? ? ? ? ? 75 1E",
-      "ElWdw_BackButtonClick":  "55 8B EC 83 C4 F4 89 55 F4 89 45 FC 8B 45 FC E8 ? ? ? ? 84 C0 0F 85 ? ? ? ?"
+      "ElWdw_BackButtonClick":  "55 8B EC 83 C4 F4 89 55 F4 89 45 FC 8B 45 FC E8 ? ? ? ? 84 C0 0F 85 ? ? ? ?",
+      "ElWdw_ForwardButtonClick": "55 8B EC 83 C4 F4 89 55 F4 89 45 FC A1 ? ? ? ? 8B 00 8B 80 ? ? ? ? E8 ? ? ? ?"
     }
   }
 }

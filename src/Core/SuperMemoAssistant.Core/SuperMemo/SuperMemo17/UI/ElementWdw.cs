@@ -90,6 +90,7 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       LogTo.Debug("Cleaning up {Name}", GetType().Name);
 
       _controlGroup?.Dispose();
+      _controlGroup = null;
       SMMainWdwPtr?.Dispose();
       ElementWdwPtr?.Dispose();
       ElementIdPtr?.Dispose();
@@ -153,6 +154,24 @@ namespace SuperMemoAssistant.SuperMemo.SuperMemo17.UI
       var success = Core.Natives.SMMain.SelectDefaultConcept(SMMainWdwPtr.Read<IntPtr>(), conceptId);
 
       return success && CurrentConceptId == conceptId;
+    }
+
+    public bool ForwardButtonClick()
+    {
+      try
+      {
+        return Core.Natives.ElWind.BackButtonClick(ElementWdwPtr.Read<IntPtr>());
+      }
+      catch (Win32Exception ex)
+      {
+        LogTo.Warning(ex, "Failed to read ElementWdwPtr");
+        return false;
+      }
+      catch (Exception ex)
+      {
+        LogTo.Error(ex, "SM internal method call threw an exception.");
+        return false;
+      }
     }
 
     public bool BackButtonClick()

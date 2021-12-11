@@ -83,6 +83,7 @@ namespace SuperMemoAssistant.SuperMemo
     Queue_GetItem,
     Contents_FindText,
     ElWdw_BackButtonClick,
+    ElWdw_ForwardButtonClick,
 
     // Special handling
     AppendAndAddElementFromText,

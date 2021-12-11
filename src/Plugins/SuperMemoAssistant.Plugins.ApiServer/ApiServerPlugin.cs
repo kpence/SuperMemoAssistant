@@ -96,7 +96,9 @@ namespace SuperMemoAssistant.Plugins.ApiServer
       HttpServer.Instance.Route("/ready-to-grade", _ => ApiServerController.ReadyToGradeAction());
       HttpServer.Instance.Route("/set-grade", grade => ApiServerController.SetGradeAction(grade));
       HttpServer.Instance.Route("/was-graded", _ => ApiServerController.WasGradedAction());
+      HttpServer.Instance.Route("/element-forward", _ => ApiServerController.ElementForwardAction());
       HttpServer.Instance.Route("/element-back", _ => ApiServerController.ElementBackAction());
+      HttpServer.Instance.Route("/extract", _ => ApiServerController.ExtractAction());
       HttpServer.Instance.Route("/next-element", _ => ApiServerController.NextElementAction());
       HttpServer.Instance.Route("/next-repetition", _ => ApiServerController.NextRepetitionAction());
       HttpServer.Instance.Route("/begin-learning", _ => ApiServerController.BeginLearningAction());
@@ -137,11 +139,13 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     {
       try
       {
-        IControlHtml ctrlHtml = Svc.SM.UI.ElementWdw.ControlGroup.GetFirstHtmlControl();
-
-        ApiServerState.Instance.OnElementChanged(e.NewElement, ctrlHtml);
+        if (!ApiServerState.Instance.AwaitElementChange)
+        {
+            ApiServerState.Instance.OnElementChanged(e.NewElement);
+        }
       }
       catch (RemotingException) { }
+      ApiServerState.Instance.AwaitElementChange = false;
     }
 
     private static void TestSomething()

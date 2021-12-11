@@ -21,6 +21,8 @@ namespace SuperMemoAssistant.Plugins.ApiServer
 
     public string Run(string req)
     {
+      //MessageBox.Show(Regex.ToString());
+      Console.WriteLine("End Point Called: "+Regex.ToString());
       return Action.Invoke(req);
     }
   }

@@ -16,8 +16,8 @@
     <!-- releaseNotes will be replaced by MSBuild.Tools (see SuperMemoAssistant.csproj and https://github.com/alexis-/MSBuild.Tools) -->
     <releaseNotes>- Added: Forced creation of nuget and release folders
 - Fixed: Absolute path in nuget.config
-- oops remove that
 - update
+- oops remove that
 - Add endpoints for next repetition
 - update deps
 - Implement next-repetition button (for moving forward from topics)

@@ -20,12 +20,16 @@ namespace SuperMemoAssistant.Plugins.ApiServer
     public static ApiServerState Instance { get; } = new ApiServerState();
     public ElementInfo ElementInfo { get; set; }
     public bool IsReadyToGrade { get; set; } = false;
+    public bool AwaitElementChange { get; set; } = false;
     public bool WasGraded { get; set; } = false;
     //public IntPtr SuperMemoHWnd { get; set; }
 
-    public void OnElementChanged(IElement newElement, IControlHtml ctrlHtml)
+    public void OnElementChanged(IElement newElement)
     {
-      UpdateElementInfo(ctrlHtml.Text);
+      Console.WriteLine("ApiServerState1");
+      //if (!AwaitElementChange  && !(Svc.SM.UI.ElementWdw?.ControlGroup?.IsDisposed ?? true))
+        // UpdateElementInfo(Svc.SM.UI.ElementWdw?.ControlGroup?.GetFirstHtmlControl()?.Text);
+      ElementInfo = null;
       WasGraded = false;
     }
 
@@ -37,6 +41,7 @@ namespace SuperMemoAssistant.Plugins.ApiServer
         if (content == null)
         {
           var text = ApiServerState.Instance.ElementInfo.Text;
+          Console.WriteLine("ApiServerState UpdateElementInfo");
           var htmFile = ApiServerState.Instance.ElementInfo.HTMLFile;
           ApiServerState.Instance.ElementInfo.Content = (String.IsNullOrEmpty(htmFile)) ? text : System.IO.File.ReadAllText(htmFile);
         }
