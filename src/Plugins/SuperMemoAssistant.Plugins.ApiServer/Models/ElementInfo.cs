@@ -92,6 +92,14 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Models
         if (String.IsNullOrEmpty(Answer))
         {
           Answer = TryParseNth(1, elementInfo, @"^HTMName=(.*)\r$");
+          if (String.IsNullOrEmpty(Answer))
+          {
+            Answer = Text;
+            if (String.IsNullOrEmpty(Answer))
+            {
+              Answer = TryParse(elementInfo, @"^HTMName=(.*)\r$");
+            }
+          }
         }
       }
     }
@@ -104,9 +112,11 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Models
     {
       try
       {
-        var result = Regex.Match(source, pattern, RegexOptions.Multiline);
+        var result = (nth > 0)
+          ? Regex.Matches(source, pattern, RegexOptions.Multiline)[nth]
+          : Regex.Match(source, pattern, RegexOptions.Multiline);
         return result.Success
-          ? result.Groups[1].Captures[nth].Value
+          ? result.Groups[1].Captures[0].Value
           : "";
       }
       catch
