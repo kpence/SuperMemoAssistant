@@ -88,24 +88,32 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Models
       Text = TryParse(elementInfo, @"^Text=(.*)\r$");
       if (ElementType == "Item")
       {
-        Answer = TryParseNth(2, elementInfo, @"^Text=(.*)\r$");
+        Answer = TryParseNth(1, elementInfo, @"^Text=(.*)\r$");
         if (String.IsNullOrEmpty(Answer))
         {
-          Answer = TryParseNth(2, elementInfo, @"^HTMName=(.*)\r$");
+          Answer = TryParseNth(1, elementInfo, @"^HTMName=(.*)\r$");
         }
       }
     }
 
     public string ToJson() => JsonConvert.SerializeObject(this);
     
-    private string TryParse(string source, string pattern) => TryParseNth(1, source, pattern);
+    private string TryParse(string source, string pattern) => TryParseNth(0, source, pattern);
 
     private string TryParseNth(int nth, string source, string pattern)
     {
-      var result = Regex.Match(source, pattern, RegexOptions.Multiline);
-      return result.Success
-        ? result.Groups[nth].Captures[0].Value
-        : "";
+      try
+      {
+        var result = Regex.Match(source, pattern, RegexOptions.Multiline);
+        return result.Success
+          ? result.Groups[1].Captures[nth].Value
+          : "";
+      }
+      catch
+      {
+
+      }
+      return null;
     }
   }
 }
