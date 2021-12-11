@@ -54,6 +54,8 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Models
     public string SourceArticleId;
     [JsonProperty(PropertyName = "HTMLFile")]
     public string HTMLFile;
+    [JsonProperty(PropertyName = "Text")]
+    public string Text;
     [JsonProperty(PropertyName = "Answer")]
     public string Answer;
     [JsonProperty(PropertyName = "_FullInfo")]
@@ -83,18 +85,26 @@ namespace SuperMemoAssistant.Plugins.ApiServer.Models
       Reference = TryParse(elementInfo, @"^Reference=(.*)\r$");
       SourceArticleId = TryParse(elementInfo, @"^SourceArticle=(.*)\r$");
       HTMLFile = TryParse(elementInfo, @"^HTMFile=(.*)\r$");
-      Answer = TryParse(elementInfo, @"^Text=(.*)\r$");
-      if (String.IsNullOrEmpty(Answer))
-        Answer = TryParse(elementInfo, @"^HTMName=(.*)\r$");
+      Text = TryParse(elementInfo, @"^Text=(.*)\r$");
+      if (ElementType == "Item")
+      {
+        Answer = TryParseNth(2, elementInfo, @"^Text=(.*)\r$");
+        if (String.IsNullOrEmpty(Answer))
+        {
+          Answer = TryParseNth(2, elementInfo, @"^HTMName=(.*)\r$");
+        }
+      }
     }
 
     public string ToJson() => JsonConvert.SerializeObject(this);
     
-    private string TryParse(string source, string pattern)
+    private string TryParse(string source, string pattern) => TryParseNth(1, source, pattern);
+
+    private string TryParseNth(int nth, string source, string pattern)
     {
       var result = Regex.Match(source, pattern, RegexOptions.Multiline);
       return result.Success
-        ? result.Groups[1].Captures[0].Value
+        ? result.Groups[nth].Captures[0].Value
         : "";
     }
   }
