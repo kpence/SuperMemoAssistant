@@ -44,6 +44,11 @@ namespace SuperMemoAssistant.Plugins.ApiServer
           Console.WriteLine("ApiServerState UpdateElementInfo");
           var htmFile = ApiServerState.Instance.ElementInfo.HTMLFile;
           ApiServerState.Instance.ElementInfo.Content = (String.IsNullOrEmpty(htmFile)) ? text : System.IO.File.ReadAllText(htmFile);
+          if (ApiServerState.Instance.ElementInfo.Content.Length > 5000)
+          {
+            ApiServerState.Instance.ElementInfo.Content = "The element was too big, you have to manually copy it over.";
+          }
+
         }
       }
       catch (RemotingException) { }
