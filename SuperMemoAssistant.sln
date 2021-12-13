@@ -113,6 +113,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMemoAssistant.VersionB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMemoAssistant.Plugins.ApiServer", "src\Plugins\SuperMemoAssistant.Plugins.ApiServer\SuperMemoAssistant.Plugins.ApiServer.csproj", "{A4DA504D-476B-4C70-BDAA-871BC6E015F1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperMemoAssistant.Plugins.PDF", "src\Plugins\SuperMemoAssistant.Plugins.PDF\src\SuperMemoAssistant.Plugins.PDF\SuperMemoAssistant.Plugins.PDF.csproj", "{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		libs\pngcs\pngcs.projitems*{4f65145f-6f0c-49cd-830a-a51a2a9c5f75}*SharedItemsImports = 13
@@ -733,6 +735,46 @@ Global
 		{A4DA504D-476B-4C70-BDAA-871BC6E015F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A4DA504D-476B-4C70-BDAA-871BC6E015F1}.Release|x86.ActiveCfg = Release|Any CPU
 		{A4DA504D-476B-4C70-BDAA-871BC6E015F1}.Release|x86.Build.0 = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.1. Alpha (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.1. Alpha (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.1. Alpha (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.1. Alpha (Debug)|x86.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.2. Beta (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.2. Beta (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.2. Beta (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.2. Beta (Debug)|x86.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.2. Beta (Release)|Any CPU.ActiveCfg = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.2. Beta (Release)|Any CPU.Build.0 = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.2. Beta (Release)|x86.ActiveCfg = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.2. Beta (Release)|x86.Build.0 = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.3. Stable (Debug)|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.3. Stable (Debug)|Any CPU.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.3. Stable (Debug)|x86.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.3. Stable (Debug)|x86.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.3. Stable (Release)|Any CPU.ActiveCfg = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.3. Stable (Release)|Any CPU.Build.0 = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.3. Stable (Release)|x86.ActiveCfg = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.3. Stable (Release)|x86.Build.0 = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Coverage|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Coverage|Any CPU.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Coverage|x86.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Coverage|x86.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Debug|x86.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.NuPack Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.NuPack Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.NuPack Debug|x86.ActiveCfg = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.NuPack Debug|x86.Build.0 = Debug|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.NuPack Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.NuPack Release|Any CPU.Build.0 = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.NuPack Release|x86.ActiveCfg = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.NuPack Release|x86.Build.0 = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Release|x86.ActiveCfg = Release|Any CPU
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -760,6 +802,7 @@ Global
 		{6A546934-EB9D-400A-BC0D-E80828ABD796} = {AC925E57-BDB9-48E8-B493-8BB02C80B562}
 		{712820C7-6A72-4829-8D39-EDE2FDB32666} = {DF29F7E8-943F-4EC9-9EB5-5C4E27BA9AB2}
 		{A4DA504D-476B-4C70-BDAA-871BC6E015F1} = {943958D2-1308-4317-940F-60CAD3C74AC3}
+		{01C45F3E-2566-4EDB-84EC-CE8C3F59E733} = {943958D2-1308-4317-940F-60CAD3C74AC3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF31D6F5-6E93-461B-8C5F-348439D19C6D}

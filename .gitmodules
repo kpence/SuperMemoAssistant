@@ -32,3 +32,6 @@
 [submodule "libs/VisualStudio.GitHooks"]
 	path = libs/VisualStudio.GitHooks
 	url = https://github.com/alexis-/VisualStudio.GitHooks.git
+[submodule "src/Plugins/SuperMemoAssistant.Plugins.PDF"]
+	path = src/Plugins/SuperMemoAssistant.Plugins.PDF
+	url = https://github.com/kpence/SuperMemoAssistant.Plugins.PDF
